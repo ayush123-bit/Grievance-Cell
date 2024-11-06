@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8e0e0;2
+        }
+    .feedback select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Style the dropdown options if needed */
+.feedback select option {
+    background-color: #fff;
+    color: #333;
+}
+
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #444;
+            padding: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s, background-color 0.3s, text-shadow 0.3s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        nav a:hover {
+            color: #333;
+            background-color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .welcome {
+            width: 50%;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: opacity 0.5s;
+        }
+
+        .complaints,
+        .feedback {
+            width: 50%;
+        
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s, box-shadow 0.5s;
+            overflow: hidden;
+        }
+
+        .feedback {
+            display: none;
+        }
+
+        .active {
+            transform: translateX(-100%);
+        }
+
+        .blur .complaints {
+            filter: blur(5px);
+            box-shadow: none;
+        }
+
+        .blur .feedback {
+            filter: none;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        .complaints {
+    width: 80%; /* Adjust the width as needed */
+    max-width: 500px; /* Set a maximum width if necessary */
+    margin: 0 auto; /* Center the div */
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s, box-shadow 0.5s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.complaints form {
+    width: 100%;
+}
+#com{
+    color: rgb(220, 198, 198);
+  text-shadow: 1px 1px 2px black, 0 0 25px rgb(84, 84, 109), 0 0 5px rgb(51, 77, 91);
+}
+.welcome {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease-in-out;
+}
+
+.welcome h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    margin-bottom: 15px;
+}
+
+.welcome ul {
+    text-align: left;
+}
+
+.welcome li {
+    margin-bottom: 5px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.nav-container a {
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.nav-container a:hover {
+    background-color: #555;
+}
+#head{
+    background-color: #2a3032;
+}
+
+    </style>
+</head>
+<body>
+    <header id="head">
+        <h1>-------COLLAGE COMPLAINTS & FEEDBACK--------</h1>
+    </header>
+
+    <nav id="navbar">
+        <a href="#" id="complaint-link">COMPLAINTS</a>
+        <a href="#" id="feedback-link">FEEDBACK </a>
+        <!-- Add more navigation links if needed -->
+    </nav>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome to the Complaints and Feedback Page!</h2>
+            <p>Here you can submit your complaints and feedback. Please review the rules below:</p>
+            <ul>
+                <li>Rule 1: Be respectful to others.</li>
+                <li>Rule 2: Provide constructive feedback.</li>
+                <!-- Add more rules as needed -->
+            </ul>
+            <p>Click on "Complaints" or "Feedback" in the navigation bar to get started.</p>
+        </div>
+  <div class="complaints" id="complaints-section">
+            <h2>COMPLAINTS FORM</h2>
+            <form action="/complain" method="POST" enctype="multipart/form-data">
+                <label for="studentid">Student ID:</label>
+                <input type="text" id="studentid" value="{{st}}" readonly>
+
+                <label for="category">Category:</label>
+                <select id="category" name="Category">
+                    <option value="Academic">Academic</option>
+                    <option value="Administrative">Administrative</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Facility and Infrastructure">Facility and Infrastructure</option>
+                    <option value="Internship and job">Internship and job</option>
+                    <option value="Safety">Safety</option>
+                </select>
+
+                <label for="complaint">Enter your complaint:</label>
+                <textarea id="complaint" name="complaint" rows="4" placeholder="Type your complaint here"></textarea>
+                
+                <label for="photo">Upload Photo:</label>
+                <input type="file" id="photo" name="file" >
+
+                <!-- Button to open camera -->
+                
+
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </div>
+
+        <div class="feedback blur" id="feedback-section">
+    <h2>FEEDBACK FORM</h2>
+    <form action="/feedback" method="POST">
+        <label for="complaint">Complaint:</label>
+        <select id="feedbackType" name="complaint">
+          
+            <option >{{complain}}- {{date}}<option>
+                  
+        </select>
+
+        <label for="feedback">Enter your feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4" placeholder="Type your feedback here"></textarea>
+
+        <label for="satisfaction">Are you satisfied?</label>
+        <div id="satisfaction">
+            <input type="radio" id="yes" name="satisfied" value="Yes">
+            <label for="yes">Yes</label>
+
+            <input type="radio" id="no" name="satisfied" value="No">
+            <label for="no">No</label>
+        </div>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+</div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const welcomeSection = document.querySelector('.welcome');
+        const complaintsSection = document.getElementById('complaints-section');
+        const feedbackSection = document.getElementById('feedback-section');
+        
+        // Hide the welcome section and complaints section
+        welcomeSection.style.display = 'none';
+        complaintsSection.style.display = 'none';
+
+        // Show the feedback section
+        feedbackSection.style.display = 'block';
+
+        // Set opacity of welcome section to 1 to make it visible
+        welcomeSection.style.opacity = '1';
+
+        // Translate the sections to their default positions
+        complaintsSection.style.transform = 'translateX(100%)';
+        feedbackSection.style.transform = 'translateX(0)';
+    });
+</script>
+
+</body>
+</html>

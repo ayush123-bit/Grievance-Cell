@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints Table</title>
+  <style>
+    body {
+      overflow: auto;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white; /* Set text color to white */
+    }
+
+    th, td {
+      text-align: center;
+    }
+
+    td, tbody tr {
+      background-color: rgb(238, 7, 30); /* Default background color for tr */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Apply truncation to table cells */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px; /* Increased padding for bigger button */
+      border: none;
+      border-radius: 8px; /* Adjust border radius for a rounded button */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 0 auto; /* Center the button horizontally */
+      margin-top: 10px;
+      display: block; /* Ensure the button takes full width */
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Add some button styles */
+    .btn {
+      background-color: #4CAF50; /* Green */
+      border: 2px solid black; /* Black border */
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      margin: 20px auto; /* Center horizontally */
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+
+    .btn:hover {
+      background-color: black; /* Darker Green */
+      color: white;
+    }
+
+    /* Hide form initially */
+    #actionForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #actionTextarea {
+      width: 100%;
+      height: 200px; /* Adjust textarea height */
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Styles for expanded table */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* Set maximum width as needed */
+      cursor: pointer;
+    }
+
+    /* Style for image link */
+    .image-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+     tbody tr.satisfied-yes {
+      background-color: green; /* Change background color for satisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr.satisfied-no {
+      background-color: red; /* Change background color for unsatisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+
+  </style>
+</head>
+<body>
+  <h2>Total Complaints: {{totalComplaints}}</h2>
+
+  {{#each students}}
+    <h3>{{name}} - Student ID: {{studentId}}</h3>
+    <table id="complaintsTable" class="truncate-table">
+      <thead>
+        <tr class="{{formatSatisfied satisfied}}">
+          <th>Complaint</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Action Taken</th>
+          <th>Feedback</th>
+          <th>Satisfied</th>
+          <th>Image</th> <!-- Added column for Image -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each complaints}}
+          <tr >
+            <td class="truncate">{{complain}}</td>
+            <td class="truncate">{{category}}</td>
+            <td class="truncate">{{formatDate date}}</td>
+            <td class="truncate">
+              {{#if actionTaken.length}}
+                {{#each actionTaken}}
+                  <div>{{increment @index}}. {{this}}</div>
+                {{/each}}
+              {{else}}
+                Not Taken
+              {{/if}}
+            </td>
+            <td class="truncate">{{feedback}}</td>
+            <td class="truncate">{{satisfied}}</td>
+            <td class="image-link" data-image-url="{{imageUrl}}">View Image</td> <!-- Added link for Image -->
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/each}}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const tableCells = document.querySelectorAll('#complaintsTable tbody tr td');
+      const imageLinks = document.querySelectorAll('.image-link');
+
+      // Add click event listener to toggle text truncation
+      tableCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+          // Toggle the class to switch between truncated and expanded text
+          if (cell.classList.contains('truncate')) {
+            // Expanded to full text
+            cell.classList.remove('truncate');
+          } else {
+            // Shortened with ellipsis
+            cell.classList.add('truncate');
+          }
+        });
+      });
+
+      // Add click event listener to image links
+      imageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+          const imageUrl = this.getAttribute('data-image-url');
+          if (imageUrl) {
+            toggleImageFullscreen(imageUrl);
+          }
+        });
+      });
+
+      // Function to toggle image fullscreen
+      function toggleImageFullscreen(imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: 9999;
+          background-color: rgba(0, 0, 0, 0.8);
+          cursor: zoom-out;
+        `;
+
+        // Close fullscreen image on click
+        imageElement.addEventListener('click', function () {
+          document.body.removeChild(imageElement);
+        });
+
+        document.body.appendChild(imageElement);
+      }
+    });
+  </script>
+</body>
+</html>

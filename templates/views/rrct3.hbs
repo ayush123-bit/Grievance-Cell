@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints Table</title>
+  <style>
+    body {
+      overflow: auto;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white; /* Set text color to white */
+    }
+
+    th, td {
+      text-align: center;
+    }
+    .showComplaintBtn,.showActionBtn{
+  background-color: #e8f3e8;
+      color: rgb(39, 39, 41);
+      padding: 9px 13px;
+      border:2px solid black;
+        font-size: 13px;
+        font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+.showComplaintBtn:hover{
+   background-color: #04dd04be;
+   color: white;
+}
+.showActionBtn:hover{
+   background-color: #04dd04be;
+   color: white;
+}
+
+    td, tbody tr {
+      background-color: rgb(238, 7, 30); /* Default background color for tr */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Apply truncation to table cells */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px; /* Increased padding for bigger button */
+      border: none;
+      border-radius: 8px; /* Adjust border radius for a rounded button */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 0 auto; /* Center the button horizontally */
+      margin-top: 10px;
+      display: block; /* Ensure the button takes full width */
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Add some button styles */
+    .btn {
+      background-color: #4CAF50; /* Green */
+      border: 2px solid black; /* Black border */
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      margin: 20px auto; /* Center horizontally */
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+
+    .btn:hover {
+      background-color: black; /* Darker Green */
+      color: white;
+    }
+
+    /* Hide form initially */
+    #actionForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #actionTextarea {
+      width: 100%;
+      height: 200px; /* Adjust textarea height */
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Styles for expanded table */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* Set maximum width as needed */
+      cursor: pointer;
+    }
+
+    /* Style for image link */
+    .image-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+     .styled-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.styled-input:focus {
+  border-color: #007bff;
+}
+
+   .search-container {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 20px; /* Add space between elements */
+}
+
+.search-label {
+  margin-right: 10px; /* Add some space between labels and input/select elements */
+}
+
+.styled-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Adjust the width of the input and select elements as needed */
+#dateFilter,
+#categoryFilter,
+#complainFilter {
+  width: 150px;
+}
+ 
+.refresh-button {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+.header-container {
+  overflow: hidden;
+  background-color: rgb(39, 39, 40); /* Blue background color */
+  color:white; /* White text color */
+  height: 30px; /* Adjust height as needed */
+  font-family: serif;
+  font-weight: bold;
+}
+
+.header-animation {
+  position: relative;
+  animation: slideFromRight 10s linear infinite; /* Adjust animation duration and timing as needed */
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  right: -100px; /* Start position outside the view */
+  font-size: 24px; /* Adjust font size as needed */
+}
+
+@keyframes slideFromRight {
+  from {
+    right: -100px; /* Start position outside the view */
+  }
+  to {
+    right: 100%; /* End position at the end of the container */
+  }
+}
+    
+
+  </style>
+</head>
+<body>
+   <div class="header-container">
+    <div class="header-animation">
+      <span class="header-text">UNITED COLLEGE ENGINEERING AND RESEARCH</span>
+    </div>
+  </div>
+  <button id="refreshButton" class="refresh-button">Refresh</button>
+
+  <h2>Complaints sorted by date</h2>
+  <div class="search-container">
+    <label for="dateFilter" class="search-label">Search :</label>
+    <input type="date" id="dateFilter" class="styled-input">
+  
+  
+   <label for="categoryFilter" class="search-label">Category:</label>
+               <select id="categoryFilter" class="styled-input">
+                  <option value="">All</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Administrative">Administrative</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Facility and Infrastructure">Facility and Infrastructure</option>
+                    <option value="Internship and job">Internship and job</option>
+                    <option value="Safety">Safety</option>
+                </select>
+  </div>
+
+  {{#each students}}
+    <h3 id="studentInfo">{{name}} - Student ID: {{studentId}}</h3>
+    <table id="complaintsTable" class="truncate-table">
+      <thead>
+        <tr>
+          <th>Complaint</th>
+          
+          <th>Category</th>
+          <th>Date</th>
+          <th>Action Taken</th>
+          <th>Feedback</th>
+          <th>Satisfied</th>
+<!-- Added column for Image -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each complaints}}
+          <tr>
+                     <td class="truncate">
+  <!-- Button to toggle complaint content -->
+  <button class="showComplaintBtn">Show Complaint</button>
+  <div class="complaintContent" style="display: none;">
+    <!-- Complaint content -->
+    <span>{{complain}}</span>
+    {{#if url}} 
+ <p class="image-link" data-image-url="images/{{url}}">View Image</p>
+ {{/if}} 
+ </div>
+</td>
+            <td class="truncate">{{category}}</td>
+            <td class="truncate">{{formatDate date}}</td>
+<td class="truncate">
+  {{#if actionTaken.length}}
+    <!-- Button to toggle action taken content -->
+    <button class="showActionBtn">Show Action</button>
+    <div class="actionContent" style="display: none;">
+      <!-- Action taken content -->
+      {{#each actionTaken}}
+        <div>
+          Action {{increment @index}}: {{this.action}} 
+          {{#if this.url2}} 
+         <p>URL {{increment @index}}: <span class="image-link" data-image-url="images/{{this.url2}}">View image</span></p> 
+          {{/if}} 
+        
+        <p> Date {{increment @index}}: {{formatDate this.date}} </p>
+        
+        </div>
+        <hr>
+      {{/each}}
+    </div>
+  {{else}}
+    Not Taken
+  {{/if}}
+</td>
+            <td class="truncate">{{feedback}}</td>
+            <td class="truncate">{{satisfied}}</td>
+
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/each}}
+  <button id="sendIdsButton" class="btn">Send Email</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('sendIdsButton').addEventListener('click', function () {
+        // Get student IDs from the table heading
+        const studentIds = Array.from(document.querySelectorAll('h3')).map(heading => {
+          return heading.textContent.match(/Student ID: (\d+)/)[1]; // Extract student ID from heading text
+        });
+
+        // Make sure student IDs are not empty
+        if (studentIds.length > 0) {
+          // Make a POST request to the server
+          fetch('/again2', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(  studentIds )
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Response from server:', data);
+            // Handle response from server as needed
+          })
+          .catch(error => {
+            console.error('Error sending student IDs to server:', error);
+            // Handle error as needed
+          });
+        } else {
+          console.log('No student IDs found.');
+          // Handle case where no student IDs are found in the table
+        }
+      });
+
+      const tableCells = document.querySelectorAll('#complaintsTable tbody tr td');
+      const imageLinks = document.querySelectorAll('.image-link');
+
+      // Add click event listener to toggle text truncation
+      tableCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+          // Toggle the class to switch between truncated and expanded text
+          if (cell.classList.contains('truncate')) {
+            // Expanded to full text
+            cell.classList.remove('truncate');
+          } else {
+            // Shortened with ellipsis
+            cell.classList.add('truncate');
+          }
+        });
+      });
+
+      // Add click event listener to image links
+      imageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+          const imageUrl = this.getAttribute('data-image-url');
+          console.log("Image URL:", imageUrl); // Debugging: Log image URL
+          if (imageUrl) {
+            toggleImageFullscreen(imageUrl);
+          }
+        });
+      });
+
+      // Function to toggle image fullscreen
+      function toggleImageFullscreen(imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          max-width: 100%;
+          max-height: 100%;
+          z-index: 9999;
+          background-color: rgba(0, 0, 0, 0.8);
+          cursor: zoom-out;
+        `;
+
+        // Close fullscreen image on click
+        imageElement.addEventListener('click', function () {
+          document.body.removeChild(imageElement);
+        });
+
+        document.body.appendChild(imageElement);
+      }
+    const showActionBtns = document.querySelectorAll('.showActionBtn');
+  showActionBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest action content div within the same row
+      const actionContent = this.parentElement.querySelector('.actionContent');
+      // Toggle visibility of action content
+      actionContent.style.display = actionContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+
+
+  const showComplaintBtns = document.querySelectorAll('.showComplaintBtn');
+  showComplaintBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest complaint content div within the same row
+      const complaintContent = this.parentElement.querySelector('.complaintContent');
+      // Toggle visibility of complaint content
+      complaintContent.style.display = complaintContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+   function convertDateFormat(inputDate) {
+    var parts = inputDate.split('-');
+    return parts[2] + '/' + parseInt(parts[1]) + '/' + parts[0];
+}
+     const dateFilter = document.getElementById('dateFilter');
+   dateFilter.addEventListener('change', function () {
+    const selectedDate = convertDateFormat(this.value);
+    
+    const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+    tableRows.forEach(row => {
+      const rowDate = row.querySelector('td:nth-child(3)').textContent;
+      const rowDateParts = rowDate.split(','); // Split date and time by comma
+      const rowDatePart = rowDateParts[0].trim(); // Get the date part before comma
+       
+      if (selectedDate === '' || selectedDate === rowDatePart) {
+        row.style.display = 'table-row'; // Show row if date matches or if no date is selected
+      } else {
+        row.style.display = 'none'; // Hide row if date does not match
+      }
+    });
+  });
+
+  
+  
+  const categoryFilter = document.getElementById('categoryFilter');
+
+categoryFilter.addEventListener('change', function () {
+  const selectedCategory = this.value;
+
+  const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+  tableRows.forEach(row => {
+    const rowCategory = row.querySelector('td:nth-child(2)').textContent;
+
+    if (selectedCategory === '') {
+      row.style.display = 'table-row'; // Show all rows if "All" is selected
+    } else if (selectedCategory === rowCategory) {
+      row.style.display = 'table-row'; // Show row if category matches selected category
+    } else {
+      row.style.display = 'none'; // Hide row if category does not match
+    }
+  });
+});
+
+
+
+
+
+    });
+
+  </script>
+</body>
+</html>

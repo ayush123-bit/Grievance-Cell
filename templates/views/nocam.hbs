@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Complaint System</title>
+  <style>
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.main-container {
+  display: flex;
+  height: 100vh;
+}
+
+.right-div {
+  flex: 1;
+  background-color: #3498db;
+  color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+form {
+  max-width: 300px;
+  margin: auto;
+}
+
+label, input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+       
+
+        function setFormAction(action) {
+            document.getElementById('fm').action = action;
+            document.getElementById('fm').method = 'post'; // Assuming you want to use the POST method
+        }
+    </script>
+    <style>
+        .c {
+            text-align: center;
+        }
+
+        .c h1 {
+            margin: 0;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/ter.css">
+</head>
+<body>
+    {{>navbar}}
+    <div class="c">
+        <h1 style="font-size: 5em;">Complain Data</h1>
+    </div>
+
+    <form id="fm">
+        <label for="complaintCategory">Select {{val}}:</label>
+        <select id="complaintCategory" name="category">
+            <option value="All">All</option>
+            <option value="Academic">Academic</option>
+            <option value="Administrative">Administrative</option>
+            <option value="Faculty">Faculty</option>
+            <option value="Financial">Financial</option>
+            <option value="Technology">Technology</option>
+            <option value="Facility and Infrastructure">Facility and Infrastructure</option>
+            <option value="Internship and job">Internship and job</option>
+            <option value="Safety">Safety</option>
+        </select><br>
+        <input name="branch" placeholder="BRANCH" id="b">
+        <input name="semester" placeholder="SEMESTER" id="sem">
+        <input name="section" placeholder="SECTION" id="sec" value="All" oninput="updatevalue(this)">
+        <button type="submit" onclick="setFormAction('/complaindata')" id="btn1">All</button>
+        <button type="submit" onclick="setFormAction('/resolved')" id="btn2">Resolved</button>
+        <button type="submit" onclick="setFormAction('/unresolved')" id="btn3">Unresolved</button>
+         <button type="submit" onclick="setFormAction('/datewise')" id="btn1">Date wise</button>
+    </form>
+
+</body>
+</html>
+
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #27ae60;
+}
+
+.moved {
+  transform: translateX(-100%);
+}
+
+  </style>
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Complaint System</title>
+</head>
+<body>
+  <div class="main-container">
+    <div class="right-div">
+      <form id="complaintForm">
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required>
+
+        <label for="semester">Semester:</label>
+        <input type="text" id="semester" name="semester" required>
+
+        <label for="section">Section:</label>
+        <input type="text" id="section" name="section" required>
+
+        <button type="button" onclick="moveToUnresolved()">Unresolved</button>
+        <button type="button" onclick="moveToResolved()">Resolved</button>
+      </form>
+    </div>
+  </div>
+  
+</body>
+</html>
+
+  <script>
+    function moveToUnresolved() {
+  // Your logic to move the complaint to the unresolved section
+  console.log('Moving to Unresolved');
+}
+
+function moveToResolved() {
+  // Your logic to move the complaint to the resolved section
+  console.log('Moving to Resolved');
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Complaints</title>
+  <style>
+    body {
+      overflow: auto;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white; /* Set text color to white */
+    }
+
+    th, td {
+      text-align: center;
+    }
+
+    tbody tr {
+      background-color: #f8f8f8; /* Default background color for tr */
+    }
+
+    tbody tr.satisfied-yes {
+      background-color: green; /* Change background color for satisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr.satisfied-no {
+      background-color: red; /* Change background color for unsatisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+   
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+}
+.showComplaintBtn,.showActionBtn{
+  background-color: #e8f3e8;
+      color: rgb(39, 39, 41);
+      padding: 9px 13px;
+      border:2px solid black;
+        font-size: 13px;
+        font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+.showComplaintBtn:hover{
+   background-color: #007bff;
+   color: white;
+}
+.showActionBtn:hover{
+   background-color: #007bff;
+   color: white;
+}
+.refresh-button {
+  position: fixed;
+  top: 70px;
+  right: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+
+    /* Add some button styles */
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border:2px solid black;
+       
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+     
+
+    .btn:hover {
+      background-color: #007bff;
+    }
+
+    #submitBtn {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+     #sendEmailBtn{
+      margin-top: 10px;
+      font-size: 16px;
+      background-color: rgb(255, 140, 0);
+    }
+
+    #actionForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #actionTextarea {
+      width: 700px;
+      height: 200px; /* Adjust textarea height */
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Truncate long content with ellipsis */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* Set maximum width as needed */
+      cursor: pointer;
+    }
+    .image-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    
+
+    
+    /* Style for the label */
+
+    
+    /* Style for the date input box */
+    
+    .styled-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.styled-input:focus {
+  border-color: #007bff;
+}
+
+   .search-container {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 20px; /* Add space between elements */
+}
+
+.search-label {
+  margin-right: 10px; /* Add some space between labels and input/select elements */
+}
+
+.styled-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Adjust the width of the input and select elements as needed */
+#dateFilter,
+#categoryFilter,
+#complainFilter {
+  width: 150px;
+}
+.header-container {
+  overflow: hidden;
+  background-color: rgb(39, 39, 40); /* Blue background color */
+  color:white; /* White text color */
+  height: 30px; /* Adjust height as needed */
+  font-family: serif;
+  font-weight: bold;
+}
+
+.header-animation {
+  position: relative;
+  animation: slideFromRight 10s linear infinite; /* Adjust animation duration and timing as needed */
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  right: -100px; /* Start position outside the view */
+  font-size: 24px; /* Adjust font size as needed */
+}
+
+@keyframes slideFromRight {
+  from {
+    right: -100px; /* Start position outside the view */
+  }
+  to {
+    right: 100%; /* End position at the end of the container */
+  }
+}
+  </style>
+</head>
+<body>
+   <div class="header-container">
+    <div class="header-animation">
+      <span class="header-text">UNITED  COLLEGE  ENGINEERING  AND  RESEARCH</span>
+    </div>
+  </div>
+  <button id="refreshButton" class="refresh-button">Refresh</button>
+
+  <h2>Complaints sorted by date</h2>
+  <div class="search-container">
+    <label for="dateFilter" class="search-label">Search :</label>
+    <input type="date" id="dateFilter" class="styled-input">
+  
+  
+   <label for="categoryFilter" class="search-label">Category:</label>
+               <select id="categoryFilter" class="styled-input">
+                  <option value="">All</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Administrative">Administrative</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Facility and Infrastructure">Facility and Infrastructure</option>
+                    <option value="Internship and job">Internship and job</option>
+                    <option value="Safety">Safety</option>
+                </select>
+               
+               
+                <label for="complainFilter" class="search-label">Complain:</label>
+               <select id="complainFilter" class="styled-input">
+                  <option value="All">All</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="unresolved">Unresolved</option>
+                   
+                </select>
+  </div>
+  <table  id="complaintsTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Category</th>
+       
+        <th>Complaint</th>
+         <th>Action Taken</th>
+        <th>Feedback</th>
+        <th>Satisfied</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each complaints}}
+        <tr class="{{formatSatisfied sortedcomplaint.satisfied}}">
+          <td class="truncate">{{formatDate sortedcomplaint.date}}</td>
+          <td class="truncate">{{id}}</td>
+          <td class="truncate">{{name}}</td>
+          <td class="truncate">{{sortedcomplaint.category}}</td>
+
+          <td class="truncate">
+  <!-- Button to toggle complaint content -->
+  <button class="showComplaintBtn">Show Complaint</button>
+  <div class="complaintContent" style="display: none;">
+    <!-- Complaint content -->
+    <span>{{sortedcomplaint.complain}}</span>
+ {{#if sortedcomplaint.url}}
+      <p class="image-link" data-image-url="images/{{sortedcomplaint.url}}">View Image</p>
+    {{/if}}
+ </div>
+</td>
+          <td class="truncate">
+  {{#if sortedcomplaint.actionTaken.length}}
+    <!-- Button to toggle action taken content -->
+    <button class="showActionBtn">Show Action</button>
+    <div class="actionContent" style="display: none;">
+      <!-- Action taken content -->
+      {{#each sortedcomplaint.actionTaken}}
+        <div>
+          Action {{increment @index}}: {{this.action}}
+          {{#if this.url2}} 
+         <p>URL {{increment @index}}: <span class="image-link" data-image-url="images/{{this.url2}}">View image</span></p> 
+          {{/if}}
+        <p> Date {{increment @index}}: {{formatDate this.date}} </p>
+        
+        </div>
+        <hr>
+      {{/each}}
+    </div>
+  {{else}}
+    No Action Taken
+  {{/if}}
+</td>
+          
+          <td class="truncate">{{sortedcomplaint.feedback}}</td>
+          <td class="truncate">{{sortedcomplaint.satisfied}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+<form id="actionForm" enctype="multipart/form-data">
+  <span id="closeFormBtn" class="close">&times;</span> <!-- Close button -->
+  <textarea id="actionTextarea" placeholder="Enter action taken..." name="textarea"></textarea><br>
+  <input type="file" id="fileInput" name="fileInput"><br> <!-- Added file input field -->
+  <div class="btn-container">
+    <input type="submit" value="Submit" id="submitBtn" class="btn">
+    <button id="sendEmailBtn" class="btn">Send email to faculty</button>
+  </div>
+   
+</form>
+  <script>
+    let currentCategory = null;
+    let currentName1 = '';
+      let currentStudentId1 = '';
+      let currentDate1 = '';
+      let currentComplain1 = '';
+    document.addEventListener('DOMContentLoaded', function () {
+      const refreshButton = document.getElementById('refreshButton');
+
+  // Add click event listener to the refresh button
+  refreshButton.addEventListener('click', function () {
+    location.reload(); // Reload the page to its initial state
+  });
+
+   const messageElement = document.createElement('div');
+  messageElement.textContent = 'Double click to write action taken or to send email to faulty!';
+  messageElement.style.cssText = `
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color:white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  `;
+
+  // Append the message element to the document body
+  document.body.appendChild(messageElement);
+
+  // Automatically remove the message after 5 seconds (5000 milliseconds)
+  setTimeout(function () {
+    // Remove the message element from the DOM
+    document.body.removeChild(messageElement);
+  }, 5000);
+
+  // Rest of your JavaScript code...
+
+
+
+
+      const tableCells = document.querySelectorAll('#complaintsTable tbody tr td');
+      const imageLinks = document.querySelectorAll('.image-link');
+     const closeFormBtn = document.getElementById('closeFormBtn');
+
+  // Add click event listener to the close button
+  closeFormBtn.addEventListener('click', function () {
+    // Hide the form
+    document.getElementById('actionForm').style.display = 'none';
+  });
+
+  // Add click event listener to the close button
+ 
+
+      // Add click event listener to toggle text truncation
+      tableCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+          // Toggle the class to switch between truncated and expanded text
+          if (cell.classList.contains('truncate')) {
+            // Expanded to full text
+            cell.classList.remove('truncate');
+          } else {
+            // Shortened with ellipsis
+            cell.classList.add('truncate');
+          }
+        });
+      });
+
+      // Add click event listener to image links
+      imageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+          const imageUrl = this.getAttribute('data-image-url');
+          if (imageUrl) {
+            toggleImageFullscreen(imageUrl);
+          }
+        });
+      });
+
+      // Function to toggle image fullscreen
+      function toggleImageFullscreen(imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          max-width:75vw;
+          max-height: 100vh;
+          z-index: 9999;
+          background-color: rgba(0, 0, 0, 0.8);
+          cursor: zoom-out;
+        `;
+
+        // Close fullscreen image on click
+        imageElement.addEventListener('click', function () {
+          document.body.removeChild(imageElement);
+        });
+
+        document.body.appendChild(imageElement);
+      }
+
+      const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+      let isFormVisible = false;
+      let currentName = '';
+      let currentStudentId = '';
+      let currentDate = '';
+      let currentComplain = '';
+      let currentActionTaken = '';
+      let currentFeedback = '';
+      let currentSatisfied = '';
+
+      tableRows.forEach(row => {
+        row.addEventListener('dblclick', function () {
+          isFormVisible = !isFormVisible;
+          document.getElementById('actionForm').style.display = isFormVisible ? 'block' : 'none';
+
+          if(isFormVisible){
+            currentName = row.querySelector('td:nth-child(3)').innerText;
+            currentName1=currentName;
+            currentStudentId = row.querySelector('td:nth-child(2)').innerText;
+            currentStudentId1=currentStudentId;
+            currentDate = row.querySelector('td:nth-child(1)').innerText;
+            currentDate1=currentDate;
+                    currentCategory = row.querySelector('td:nth-child(4)').innerText;
+
+const spanElement = row.querySelector('.complaintContent span');
+
+// Retrieve the text content of the span element
+const complaintText = spanElement.textContent.trim();
+
+currentComplain = complaintText;
+            currentComplain1=currentComplain;
+            currentFeedback = row.querySelector('td:nth-child(7)').innerText;
+            currentSatisfied = row.querySelector('td:nth-child(8)').innerText;
+          }
+        });
+      });
+          
+      document.getElementById('actionForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const actionTaken = document.getElementById('actionTextarea').value.trim();
+        const fileInput = document.getElementById('fileInput').files[0]; // Get the selected file
+
+
+
+   const formData = new FormData();
+    formData.append('actionTaken', actionTaken);
+    formData.append('file', fileInput);
+    formData.append('name', currentName);
+    formData.append('studentId', currentStudentId);
+    formData.append('date', currentDate);
+    formData.append('complain', currentComplain);
+    formData.append('feedback', currentFeedback);
+    formData.append('satisfied', currentSatisfied);
+         console.log(formData);
+    fetch('/textarea', {
+      method: 'POST',
+      body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          alert('Form submitted successfully!');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while submitting the form.');
+        });
+
+        document.getElementById('actionForm').style.display = 'none';
+      });
+           
+
+      const sendEmailBtn = document.getElementById('sendEmailBtn');
+           
+  // Add click event listener to the send email button
+  sendEmailBtn.addEventListener('click', function () {
+    event.preventDefault();
+    // Extract the category of the complaint
+   
+    // Check if a category is selected
+    if (!currentCategory) {
+      alert('Please select a complaint first.');
+      return;
+    }
+    const data={
+      complain:currentComplain1,
+      category:currentCategory,
+      date:currentDate1,
+      studentId:currentStudentId1,
+      name:currentName1
+
+    }
+
+    // Send POST request to the server with category information
+    fetch('/sendEmailtofaculty', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert('Email sent successfully!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending the email.');
+      });
+       document.getElementById('actionForm').style.display = 'none';
+  });
+
+  
+  // Add click event listeners to action buttons
+  const showActionBtns = document.querySelectorAll('.showActionBtn');
+  showActionBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest action content div within the same row
+      const actionContent = this.parentElement.querySelector('.actionContent');
+      // Toggle visibility of action content
+      actionContent.style.display = actionContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+  // Other JavaScript code...
+    const showComplaintBtns = document.querySelectorAll('.showComplaintBtn');
+  showComplaintBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest complaint content div within the same row
+      const complaintContent = this.parentElement.querySelector('.complaintContent');
+      // Toggle visibility of complaint content
+      complaintContent.style.display = complaintContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+  function convertDateFormat(inputDate) {
+    var parts = inputDate.split('-');
+    return parts[2] + '/' + parseInt(parts[1]) + '/' + parts[0];
+}
+  
+
+  // Add change event listener to the date filter
+  const dateFilter = document.getElementById('dateFilter');
+
+  // Add change event listener to the date filter
+  dateFilter.addEventListener('change', function () {
+    const selectedDate = convertDateFormat(this.value);
+    
+    const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+    tableRows.forEach(row => {
+      const rowDate = row.querySelector('td:nth-child(1)').textContent;
+      const rowDateParts = rowDate.split(','); // Split date and time by comma
+      const rowDatePart = rowDateParts[0].trim(); // Get the date part before comma
+       
+      if (selectedDate === '' || selectedDate === rowDatePart) {
+        row.style.display = 'table-row'; // Show row if date matches or if no date is selected
+      } else {
+        row.style.display = 'none'; // Hide row if date does not match
+      }
+    });
+  });
+
+
+  
+  let selectedCategory = ''; // Declare selectedCategory outside the event listeners
+
+const categoryFilter = document.getElementById('categoryFilter');
+
+categoryFilter.addEventListener('change', function () {
+  selectedCategory = this.value; // Update selectedCategory when category changes
+
+  const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+  tableRows.forEach(row => {
+    const rowCategory = row.querySelector('td:nth-child(4)').textContent;
+
+    if (selectedCategory === '') {
+      row.style.display = 'table-row'; // Show all rows if "All" is selected
+    } else if (selectedCategory === rowCategory) {
+      row.style.display = 'table-row'; // Show row if category matches selected category
+    } else {
+      row.style.display = 'none'; // Hide row if category does not match
+    }
+  });
+});
+
+const complainFilter = document.getElementById('complainFilter');
+
+complainFilter.addEventListener('change', function () {
+  const selectedComplain = this.value;
+
+  const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+  tableRows.forEach(row => {
+    const rowCategory = row.querySelector('td:nth-child(4)').textContent;
+    const rowSatisfied = row.querySelector('td:nth-child(8)').textContent;
+
+    if (selectedComplain === 'All') {
+      // Show all rows if "All" is selected or if the category matches selectedCategory
+      if (selectedCategory === '' || rowCategory === selectedCategory) {
+        row.style.display = 'table-row';
+      } else {
+        row.style.display = 'none';
+      }
+    } else if (selectedComplain === 'resolved') {
+      // Show rows where the complaint is resolved (category is "Yes")
+      if (rowSatisfied === 'Yes' && (selectedCategory === '' || rowCategory === selectedCategory)) {
+        row.style.display = 'table-row';
+      } else {
+        row.style.display = 'none';
+      }
+    } else if (selectedComplain === 'unresolved') {
+      // Show rows where the complaint is unresolved (category is either empty or "No")
+      if ((rowSatisfied === '' || rowSatisfied === 'No') && (selectedCategory === '' || rowCategory === selectedCategory)) {
+        row.style.display = 'table-row';
+      } else {
+        row.style.display = 'none';
+      }
+    }
+  });
+});
+
+
+
+
+    });
+  </script>
+</body>
+</html>

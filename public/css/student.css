@@ -1,0 +1,12 @@
+section {
+    height: 100vh;
+    
+    background-image: url('Home.jpg');
+    background-size: cover;
+    background-position: center;
+}
+h1 {
+    font-style: italic;
+    font-size: 7em !important;
+    margin-left: 400px !important
+}

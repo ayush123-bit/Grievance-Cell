@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    select {
+  width: 200px; /* Example width */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white; /* Background color of the select box */
+  color: #333; /* Text color */
+}
+
+/* Styles for the dropdown arrow */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('dropdown-arrow.png'); /* Example dropdown arrow image */
+  background-position: right center;
+  background-repeat: no-repeat;
+  padding-right: 30px; /* Adjust padding to make room for the arrow */
+}
+
+/* Styles for the dropdown arrow in Firefox */
+@-moz-document url-prefix() {
+  select {
+    padding-right: 30px; /* Adjust padding to make room for the arrow */
+  }
+}
+
+  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha512-mf78KukU/a8rjr7aBRvCa2Vwg/q0tUjJhLtcK53PHEbFwCEqQ5durlzvVTgQgKpv+fyNMT6ZQT1Aq6tpNqf1mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body style="background-color: rgb(37, 233, 247);">
+   <select id="state-graph" onchange="filter()">
+                        <option value="pie">Pie chart</option>
+                       <option value="bar">Bar</option>
+                     <option value="line">Line chart</option>
+                    
+                    <option value="doughnut">Doughnut chart</option>
+                   
+                    
+                 
+</select>
+
+
+    <div style="text-align: center;">
+        <h1 style="display: inline;">Graph of complaints:</h1>
+    </div>
+    <canvas id="chart" height="600" width="1500" style="top:50px;margin:auto;background-color:azure"></canvas>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const monthlyCounts = {{{data}}}
+
+  const ctx = document.getElementById('chart');
+
+  const chart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October','November','December'],
+      datasets: [{
+        label: 'No of complaints',
+        data: monthlyCounts,
+        borderWidth: 1,
+         pointBackgroundColor: function(context) {
+          return context.parsed.y > 30 ? 'red' : 'green';
+        }
+
+      }]
+    },
+    options: {
+      aspectRatio: 1, // Maintain aspect ratio
+      responsive: false, // Do not allow resizing
+      plugins: {
+        legend: {
+          display: true
+        }
+      },
+      layout: {
+        padding: {
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: 10
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  function filter() {
+  const select = document.getElementById('state-graph');
+  const selectedValue = select.value;
+
+  // Construct the POST request
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ selectedValue: selectedValue })
+  };
+
+  // Send the POST request to the server
+  fetch('/filter', requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      // Handle response from the server if needed
+      console.log(data);
+      
+      let chartType;
+      if (typeof data === 'string') {
+        chartType = data;
+      } else if (typeof data === 'object' && data.chartType) {
+        chartType = data.chartType;
+      } else {
+        console.error('Invalid data format:', data);
+        return;
+      }
+
+      // Set the chart type and update the chart
+      chart.config.type = chartType;
+      chart.update();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+</script>
+ 
+</html>

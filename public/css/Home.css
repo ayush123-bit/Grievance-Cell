@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('Home.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+section {
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    font-size: 7em;
+    margin-left: 400px; /* Adjust margin as needed */
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 30px;
+    margin: 10px;
+    cursor: pointer;
+    border: none; /* Remove button border for cleaner look */
+}
+
+#studentBtn {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+#staffBtn {
+    background-color: #008CBA;
+    color: white;
+    border-radius: 5px;
+}
+
+#studentBtn:hover {
+    background: aliceblue;
+    color: black;
+}
+#staffBtn:hover {
+    background: aliceblue;
+    color: black;
+}

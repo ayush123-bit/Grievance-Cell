@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8e0e0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s, background-color 0.3s, text-shadow 0.3s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        nav a:hover {
+            color: #333;
+            background-color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .welcome,
+        .complaints,
+        .feedback {
+            width: 80%;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .feedback {
+            display: none;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .active {
+            transform: translateX(-100%);
+        }
+
+        .blur .complaints {
+            filter: blur(5px);
+            box-shadow: none;
+        }
+
+        .blur .feedback {
+            filter: none;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px;
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 5px 0;
+            }
+
+            .container {
+                margin: 10px;
+            }
+
+            .welcome,
+            .complaints,
+            .feedback {
+                width: 100%;
+                margin: 10px 0;
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            nav a {
+                padding: 8px;
+            }
+
+            .welcome h2,
+            .complaints h2,
+            .feedback h2 {
+                font-size: 20px;
+            }
+
+            input,
+            textarea,
+            select {
+                padding: 8px;
+            }
+
+            button {
+                padding: 6px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>COLLEGE COMPLAINTS & FEEDBACK</h1>
+    </header>
+
+    <nav>
+        <a href="#" id="complaint-link">COMPLAINTS</a>
+        <a href="#" id="feedback-link">FEEDBACK</a>
+    </nav>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome to the Complaints and Feedback Page!</h2>
+            <p>Here you can submit your complaints and feedback. Please review the rules below:</p>
+            <ul>
+                <li>Rule 1: Be respectful to others.</li>
+                <li>Rule 2: Provide constructive feedback.</li>
+            </ul>
+            <p>Click on "Complaints" or "Feedback" in the navigation bar to get started.</p>
+        </div>
+
+        <div class="complaints" id="complaints-section">
+            <h2>COMPLAINTS FORM</h2>
+            <form action="/complain" method="POST" enctype="multipart/form-data">
+                <label for="studentid">Student ID:</label>
+                <input type="text" id="studentid" value="{{st}}" readonly>
+
+                <label for="category">Category:</label>
+                <select id="category" name="Category">
+                    <option value="Academic">Academic</option>
+                    <option value="Administrative">Administrative</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Facility and Infrastructure">Facility and Infrastructure</option>
+                    <option value="Internship and job">Internship and job</option>
+                    <option value="Safety">Safety</option>
+                </select>
+
+                <label for="complaint">Enter your complaint:</label>
+                <textarea id="complaint" name="complaint" rows="4" placeholder="Type your complaint here"></textarea>
+                
+                <label for="photo">Upload Photo:</label>
+                <input type="file" id="photo" name="file">
+
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </div>
+
+        <div class="feedback blur" id="feedback-section">
+            <h2>FEEDBACK FORM</h2>
+            <form action="/feedback" method="POST">
+                <label for="complaint">Complaint:</label>
+                <select id="feedbackType" name="complaint">
+                    {{#each complaint}}
+                        <option>{{complain}} - {{formatDate date}}</option>
+                    {{/each}}
+                </select>
+
+                <label for="feedback">Enter your feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4" placeholder="Type your feedback here"></textarea>
+
+                <label for="satisfaction">Are you satisfied?</label>
+                <div id="satisfaction">
+                    <input type="radio" id="yes" name="satisfied" value="Yes">
+                    <label for="yes">Yes</label>
+
+                    <input type="radio" id="no" name="satisfied" value="No">
+                    <label for="no">No</label>
+                </div>
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const complaintLink = document.getElementById('complaint-link');
+        const feedbackLink = document.getElementById('feedback-link');
+        const welcomeSection = document.querySelector('.welcome');
+        const complaintsSection = document.getElementById('complaints-section');
+        const feedbackSection = document.getElementById('feedback-section');
+
+        complaintLink.addEventListener('click', () => {
+            welcomeSection.style.opacity = '0';
+            setTimeout(() => {
+                welcomeSection.style.display = 'none';
+                complaintsSection.style.display = 'block';
+                feedbackSection.style.display = 'none';
+            }, 500);
+        });
+
+        feedbackLink.addEventListener('click', () => {
+            welcomeSection.style.opacity = '0';
+            setTimeout(() => {
+                welcomeSection.style.display = 'none';
+                complaintsSection.style.display = 'none';
+                feedbackSection.style.display = 'block';
+            }, 500);
+        });
+
+        function formatDate(dateString) {
+            const originalDate = new Date(dateString);
+            return originalDate.toLocaleString();
+        }
+    </script>
+</body>
+</html>

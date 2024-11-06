@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Login Page</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+           
+        }
+        .content-container{
+             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            animation: backgroundAnimation 10s infinite linear;
+            background-size: cover;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-image: url('css/coll4.jpg');
+            }
+            50% {
+                background-image: url('css/coll.jpg');
+            }
+            100% {
+                background-image: url('css/coll5.jpg');
+            }
+        }
+
+        
+
+        .content {
+            flex: 1; /* Adjusted to make room for the centered form */
+            padding: 50px;
+            color: #f8fdfdf0;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            z-index: 1;
+            box-shadow: 10px 0 20px rgba(61, 59, 59, 0.2);
+            text-align: center;
+            transform: translateX(-100%);
+            animation: slideLeftContent 1s forwards;
+        }
+
+        .login-container {
+    max-width: 450px; /* Set max-width instead of width */
+    width: 80%; /* You can adjust the percentage based on your design */
+    flex: 1;
+    padding: 30px;
+    background: rgba(139, 143, 150, 0.56);
+    border-radius: 8px;
+    box-shadow: -10px 0 20px rgba(67, 63, 63, 0.2);
+    z-index: 1;
+    text-align: center;
+    transform: translateX(-100%);
+    animation: slideLeftForm 1s forwards;
+}
+
+
+        h1 {
+            font-size: 24px;
+            color: rgb(94, 222, 222);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(36, 28, 28, 0.745);
+        }
+
+        input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #8a8383;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        input:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        @keyframes slideLeftContent {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideLeftForm {
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="content-container">
+        
+        <div class="login-container">
+            <h1>Login Form</h1>
+            <form>
+                <div class="input-container">
+                    <input type="text" placeholder="Name" required>
+                </div>
+                <div class="input-container">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="input-container">
+                    <input type="tel" placeholder="Phone" required>
+                </div>
+                <div class="input-container">
+                    <input type="text" placeholder="Student ID" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function fetchAndDisplayQuotes() {
+            // ... (your existing JavaScript code)
+        }
+
+        // Call the function initially
+        fetchAndDisplayQuotes();
+
+        // Set up an interval to fetch quotes every 5 seconds
+        setInterval(function () {
+            fetchAndDisplayQuotes();
+        }, 1000); // 5000 milliseconds = 5 seconds
+    </script>
+</body>
+</html>

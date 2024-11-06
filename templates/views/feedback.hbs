@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <style>
+           .c {
+    text-align: center;
+}
+
+.c h1 {
+    margin: 0;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<<<device-width>>>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/feedback.css">
+</head>
+<body>
+   {{>stnavbar}}
+   <div class="c">
+        <h1 style="font-size: 5em;">Complain feedback</h1>
+    </div>
+    
+    <form action="/feedback" method="POST" class="fm">
+        <input name="studentId" placeholder="StudentId">
+        <label>Staisfied:</label>
+        <input type="radio"   name="satisfied" value="Yes">Yes
+        <input type="radio"   name="satisfied" value="No">No
+        <input name="feedback" placeholder="feedback">
+        <input type="submit" value="Submit" id="btn1">
+    </form>
+</body>
+</html>

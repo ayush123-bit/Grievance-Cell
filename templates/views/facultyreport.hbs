@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Table</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #333;
+      font-size: 24px;
+    }
+    .heading {
+      display: inline;
+      border: 3px solid rgb(173, 161, 161, 0.66);
+      background-color: #0ff52ee6;
+      padding: 10px;
+      box-shadow: -8px 1px 12px 10px #5b7d89;
+      text-align: center;
+      margin-top: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+      box-shadow: -19px 15px 15px 10px rgb(112 88 88 / 65%);
+      background-color: #d7cccc;
+      overflow-x: auto;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #000;
+      color: #fff;
+    }
+    tbody {
+      background-color: #ed960b;
+    }
+    .edit-input {
+      width: calc(100% - 10px);
+      border: 1px solid #ccc;
+      padding: 6px;
+      box-sizing: border-box;
+      background-color: #0beb38;
+      color: black;
+      border: 1px solid black;
+      font-size: 14px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    button {
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 50px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0d0d0d;
+      color: white;
+    }
+    .log-button {
+      position: fixed;
+      top: 15px;
+      right: 10px;
+      padding: 8px 15px;
+      background-color: #abcdf2;
+      color: black;
+      border: 2px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    /* Mobile view adjustments */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+      .edit-input {
+        font-size: 12px;
+        padding: 5px;
+      }
+      th, td {
+        padding: 6px;
+        font-size: 12px;
+      }
+      .heading {
+        font-size: 18px;
+      }
+      button {
+        font-size: 16px;
+        padding: 8px 40px;
+      }
+      table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+      }
+      .log-button {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="log-button" onclick="window.location.href='/'">Log out</button>
+  <div class="heading">
+    <h1>Assigned Teachers and Complaint Types</h1>
+  </div>
+  <form id="teacherForm" action="/updateTeacher" method="POST">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Teacher Id</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each teachers}}
+        <tr>
+          <td><input class="edit-input" type="hidden" name="_id" value="{{_id}}"></td>
+          <td>{{teacherId}}</td>
+          <td><input class="edit-input" type="text" name="name" value="{{name}}"></td>
+          <td><input class="edit-input" type="text" name="phonenumber" value="{{phonenumber}}"></td>
+          <td><input class="edit-input" type="text" name="category" value="{{category}}"></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <button type="submit">Update</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Enhanced Page</title>
+   <style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.left-container,
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #546261;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.left-container {
+    flex: 0.6;
+    background-color: #555556c0;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.upper-box {
+    box-shadow: -20px 13px 10px 3px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+    width: 100%; /* Full width for responsiveness */
+    position: relative;
+    overflow: hidden;
+}
+
+.upper-box::before {
+    content: "";
+    background: linear-gradient(45deg, #3498db, #2ecc71);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    animation: moveBackground 10s infinite linear;
+}
+
+@keyframes moveBackground {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.upper-box img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.lower-box {
+    box-shadow: -20px 13px 10px 3px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #afd7f1d8;
+    margin: -176px;
+    width: 100%; /* Full width for responsiveness */
+}
+
+.right-container {
+    flex: 0.4;
+    background-color: #686565;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+.big-div {
+    width: 100%;
+    height: 100%;
+    background-color: #aacdcfca;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    margin: 0;
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #0a1617eb;
+    border-radius: 3px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-message {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+.login-form {
+    display: none;
+    width: 350px;
+    padding: 30px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    background-color: #555;
+    color: #fff;
+    font-size: 1em;
+}
+
+.login-form button {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    font-size: 1.2em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.login-form button:hover {
+    background-color: #333;
+    color: #ffcc00;
+}
+
+.toggle-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.toggle-buttons button {
+    background-color: #ffcc00;
+    color: #333;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.toggle-buttons button:hover {
+    background-color: #333;
+    color: #ffcc00;
+}
+
+.additional-info {
+    margin-top: 20px;
+    font-size: 1em;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.forgot-password-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.forgot-password-modal-content {
+    background-color: #d9cbcb;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #555;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.forgot-password-header {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.forgot-password-description {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.forgot-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    text-align: left;
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333;
+    font-size: 1.1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #2980b9;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #2575b8;
+}
+
+.form-group .back-to-login {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #555;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.form-group .back-to-login:hover {
+    color: #333;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack columns on smaller screens */
+        height: auto; /* Allow height to adjust */
+    }
+
+    .left-container,
+    .right-container {
+        flex: 1; /* Make both containers take equal height */
+        width: 100%; /* Full width for smaller screens */
+    }
+
+    h1 {
+        font-size: 2em; /* Adjust font size for headers */
+    }
+
+    .login-form {
+        width: 90%; /* Responsive form width */
+        padding: 20px; /* Adjust padding */
+    }
+
+    .toggle-buttons button,
+    .login-form button {
+        font-size: 1em; /* Smaller button size */
+    }
+
+    .forgot-password-modal-content {
+        width: 90%; /* Responsive modal width */
+    }
+
+    .forgot-password-header {
+        font-size: 1.5em; /* Smaller header font size */
+    }
+
+    .forgot-password-description,
+    .forgot-password-form .form-group label {
+        font-size: 1em; /* Adjust font size */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em; /* Further adjust header font size */
+    }
+
+    .login-form input,
+    .forgot-password-form .form-group input {
+        font-size: 0.9em; /* Smaller input font size */
+    }
+
+    .login-form button,
+    .forgot-password-form .form-group button {
+        font-size: 1em; /* Smaller button font size */
+    }
+
+    .additional-info {
+        font-size: 0.9em; /* Smaller info text */
+    }
+}
+
+   </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left-container">
+      <!-- Left side content and animations -->
+      <div class="upper-box" id="imageContainer">
+        <!-- Images will be dynamically changed using JavaScript -->
+      </div>
+      <div class="lower-box">
+        <!-- Quotes or other content can be added here -->
+        
+        <div class="quotes-box">
+                <h2 style="color: white;">Quote</h2>
+                <p style="color: white;">Education is the key to unlocking a sustainable future. Let's teach our students the importance of waste management and empower them to create positive change.</p>
+
+                <p style="color: yellow;">~unknown</p>
+            </div>
+      </div>
+    </div>
+  
+    <div class="right-container">
+      <h1 class="welcome-message">WELCOME TO THE LOGIN PAGE</h1>
+    
+      <!-- Add a new div for displaying invalid user message -->
+      <div class="invalid-user-message" id="invalidUserMessage">Invalid Input!!</div>
+    
+      <form class="login-form" id="studentLoginForm" >
+        <label for="studentUsername">Student ID:</label>
+        <input type="text" id="studentId" placeholder="Enter your ID" name="sid">
+    
+        <label for="studentPassword">Password:</label>
+        <input type="password" id="studentPassword" placeholder="Enter your password" name="password">
+    
+ <button type="button" onclick="login1()">Login as Student</button>
+
+        <p class="forgot-password-link" onclick="openForgotPasswordModal1()">Forgot Password?</p>
+      </form>
+    
+      <form class="login-form" id="teacherLoginForm" action="/teacherlogin" method="POST">
+        <label for="teacherUsername">Teacher ID:</label>
+        <input type="text" id="teacherId" placeholder="Enter your username" name="tid">
+    
+        <label for="teacherPassword">Password:</label>
+        <input type="password" id="teacherPassword" placeholder="Enter your password" name="password">
+  
+<button type="button" onclick="login2()">Login as Teacher</button>
+
+
+      
+        
+        <p class="forgot-password-link" onclick="openForgotPasswordModal2()">Forgot Password?</p>
+      </form>
+    
+      <div class="toggle-buttons">
+        <button type="button" onclick="toggleLoginForm('studentLoginForm')">Student Login</button>
+        <button type="button" onclick="toggleLoginForm('teacherLoginForm')">Teacher Login</button>
+      </div>
+    
+      <p class="additional-info">"Welcome to our complaint portal. Whether you are a student with concerns or a teacher ready to address them, please choose your role below to log in.<br>
+
+For Student Login: Click the 'Student' button.
+<br>
+For Teacher Login: Click the 'Teacher' button.</p>
+    </div>
+  </div>
+  
+  <!-- Forgot Password Modal -->
+  <div class="forgot-password-modal" id="forgotPasswordModal1">
+    <div class="forgot-password-modal-content">
+      <span class="close-modal" onclick="closeForgotPasswordModal1()">&times;</span>
+      <h2 class="forgot-password-header">Forgot Password</h2>
+      <p class="forgot-password-description">Enter your phone number to receive a password reset code:</p>
+      <form class="forgot-password-form" action="/forgetPassword" method="POST">
+        <div class="form-group">
+          <label for="forgotStudentId">Enter Id:</label>
+          <input type="tel" id="forgetStudentId" placeholder="Enter your Id" name="fsid">
+        </div>
+        <div class="form-group">
+          <label for="forgotPhoneNumber">Phone Number:</label>
+          <input type="tel" id="phoneNumber1" placeholder="Enter your phone number" name="fpn" oninput="addCountryCode1()">
+        </div>
+        <div class="form-group">
+          <button type="submit">Send Reset Code</button>
+        </div>
+      </form>
+      <p  class="back-to-login" onclick="closeForgotPasswordModal1()">Back to Login</p>
+    </div>
+  </div>
+  
+
+
+
+
+<div class="forgot-password-modal" id="forgotPasswordModal2">
+    <div class="forgot-password-modal-content">
+      <span class="close-modal" onclick="closeForgotPasswordModal2()">&times;</span>
+      <h2 class="forgot-password-header">Forgot Password</h2>
+      <p class="forgot-password-description">Enter your phone number to receive a password reset code:</p>
+      <form class="forgot-password-form" action="/forgetPassword1" method="POST">
+        <div class="form-group">
+          <label for="forgotStudentId">Enter Id:</label>
+          <input type="tel" id="forgetStudentId" placeholder="Enter your Id" name="ftid">
+        </div>
+        <div class="form-group">
+          <label for="forgotPhoneNumber">Phone Number:</label>
+          <input type="tel" id="phoneNumber2" placeholder="Enter your phone number" name="fpn"   oninput="addCountryCode2()">
+        </div>
+        <div class="form-group">
+          <button type="submit">Send Reset Code</button>
+        </div>
+      </form>
+      <p  class="back-to-login" onclick="closeForgotPasswordModal2()">Back to Login</p>
+    </div>
+  </div>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const imageContainer = document.getElementById("imageContainer");
+    const imageUrls = ["css/a1.jpg", "css/a3.jpg", "css/a4.jpg"];
+    const randomIndex = Math.floor(Math.random() * imageUrls.length);
+    imageContainer.innerHTML = `<img src="${imageUrls[randomIndex]}" alt="Random Image">`;
+  });
+
+  function toggleLoginForm(formId) {
+    const forms = document.querySelectorAll('.login-form');
+    const toggleButtons = document.querySelector('.toggle-buttons');
+    forms.forEach(form => {
+      if (form.id === formId) {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    });
+    toggleButtons.style.display = 'none';
+    // Hide the invalid user message when switching between forms
+    document.getElementById('invalidUserMessage').style.display = 'none';
+  }
+
+  function openForgotPasswordModal1() {
+    const modal = document.getElementById('forgotPasswordModal1');
+    modal.style.display = 'flex';
+  }
+  function openForgotPasswordModal2() {
+    const modal = document.getElementById('forgotPasswordModal2');
+    modal.style.display = 'flex';
+  }
+
+  function closeForgotPasswordModal1() {
+    const modal = document.getElementById('forgotPasswordModal1');
+    modal.style.display = 'none';
+  }
+function closeForgotPasswordModal2() {
+    const modal = document.getElementById('forgotPasswordModal2');
+    modal.style.display = 'none';
+  }
+
+  function sendPasswordResetCode() {
+    // Implement your logic to send a password reset code
+    // This is just a placeholder function
+    alert("Password reset code sent to your phone number!");
+    closeForgotPasswordModal();
+  }
+
+ async function login1() {
+    const id = document.getElementById('studentId').value;
+    const Password = document.getElementById('studentPassword').value;
+ 
+
+  try {
+    const response = await fetch('/studentlogin', {
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sid:id, password:Password}),
+    });
+
+    const data = await response.json();
+  console.log(data.success);
+    if (data.success) {
+      // Login successful, redirect or perform other actions
+      window.location.href='/student'
+    } else {
+      // Login failed, display the invalid user message
+      document.getElementById('invalidUserMessage').style.display = 'block';
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+  }
+}
+  
+  async function login2() {
+    const id = document.getElementById('teacherId').value;
+    const Password = document.getElementById('teacherPassword').value;
+ 
+
+  try {
+    const response = await fetch('/teacherlogin', {
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tid:id, password:Password}),
+    });
+
+    const data = await response.json();
+
+    if (data.success && data.message=="Admin") {
+      // Login successful, redirect or perform other actions
+      window.location.href='/admin'
+    }
+    else if(data.success && data.message=="Teacher"){
+      window.location.href='/staff'
+
+    }
+    
+     else {
+      // Login failed, display the invalid user message
+      document.getElementById('invalidUserMessage').style.display = 'block';
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+  }
+}
+
+function addCountryCode1() {
+   
+    var phoneNumberInput = document.getElementById("phoneNumber1");
+
+   
+    var cleanedNumber = phoneNumberInput.value.replace(/\D/g, '');
+
+    if (cleanedNumber.startsWith("91")) {
+      
+        phoneNumberInput.value = cleanedNumber;
+    } else {
+   
+        phoneNumberInput.value = "91" + cleanedNumber;
+    }
+}
+  
+
+
+  function addCountryCode2() {
+   
+    var phoneNumberInput = document.getElementById("phoneNumber2");
+
+   
+    var cleanedNumber = phoneNumberInput.value.replace(/\D/g, '');
+
+    if (cleanedNumber.startsWith("91")) {
+      
+        phoneNumberInput.value = cleanedNumber;
+    } else {
+   
+        phoneNumberInput.value = "91" + cleanedNumber;
+    }
+}
+  
+</script>
+
+</body>
+</html>
+ 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+           .c {
+    text-align: center;
+}
+
+.c h1 {
+    margin: 0;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/feedback.css">
+</head>
+<body>
+     <div class="c">  <h1>Verify OTP</h1></div>
+    <form action="/teacherverification" method="POST">
+        <input name="teacherId" type="number" placeholder="Teacher Id"><br>
+        <input name="tname" type="text" placeholder="Name"><br>
+       <input id="phoneNumber" name="phonenumber" type="tel" placeholder="Phone no." oninput="addCountryCode()"><br>
+        <input type="submit" value="Submit" id="btn1">
+    </form>
+    <script>
+function addCountryCode() {
+   
+    var phoneNumberInput = document.getElementById("phoneNumber");
+
+   
+    var cleanedNumber = phoneNumberInput.value.replace(/\D/g, '');
+
+    if (cleanedNumber.startsWith("91")) {
+      
+        phoneNumberInput.value = cleanedNumber;
+    } else {
+   
+        phoneNumberInput.value = "91" + cleanedNumber;
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .container {
+            width: 400px;
+            text-align: justify;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+        }
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 674px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Added box shadow */
+        }
+
+        ul li {
+            border: 2px solid blue;
+            border-radius: 25px !important;
+            border-color: white;
+            margin: 5px;
+            color: blue !important;
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); /* Added box shadow */
+        }
+
+        a {
+            border: none !important;
+            color: blue;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added text shadow */
+        }
+
+        a:hover {
+            border: none !important;
+            transform: scale(1.1); /* Added scale animation on hover */
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 517px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Added box shadow */
+        }
+
+        @keyframes blink-animation {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Navbar Styles */
+        nav.navbar {
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added box shadow */
+            padding: 10px; /* Added padding for better spacing */
+        }
+
+        nav.navbar a.navbar-brand,
+        nav.navbar a.nav-link {
+            font-size: 18px;
+            font-weight: bold;
+            color: blue;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added text shadow */
+        }
+
+        /* Rest of your existing styles... */
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-Xak/3+XPz8lR5tOM1fWImyjvKG0XsFFeUzABg2LuvfT/38j/GK+4FyjLrgvQFpwtTtMg5oMFqfqcX8eLKcJSTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>College Complaint System</title>
+</head>
+
+<body>
+    <header>
+        <!-- Modern-style Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <a class="navbar-brand text-light" href="#">UNITED</a>
+            <a class="navbar-brand text-light" href="#">Hello, <span class="text-warning">{{nm}}</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning blink text-light" href="/takeiteasy">See
+                            Complaints</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning blink text-light" href="/graph">Graph</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning blink text-light" href="/blocked">Blocked Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-warning blink text-light" href="/teachertable">Volunteers
+                            Data</a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </nav>
+
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="css/u2.jpeg" alt="Los Angeles" width="1100" height="300" class="img-fluid">
+                    <div class="carousel-caption">
+                        <h3>We Are United</h3>
+                        <p>We dream big!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="css/u6.jpeg" alt="Chicago" width="1100" height="300" class="img-fluid">
+                    <div class="carousel-caption">
+                        <h3>We Are United</h3>
+                        <p>We work
+ hard!</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="css/u5.jpeg" alt="New York" width="1100" height="300" class="img-fluid">
+                    <div class="carousel-caption">
+                        <h3>We Are United</h3>
+                        <p>We reach our goal!</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <div class="container mt-5">
+            <!-- Your existing content... -->
+            <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <img src="css/u4.jpeg" class="img-fluid" style="width:500px ;height:500px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);">
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+    <div class="container">
+        <h1>Welcome To Our <span class="text-primary">College</span></h1>
+        <p>The <span style="font-weight: bold;">United Group</span>, founded by <span style="font-weight: bold;">late Shri Shiv Ram Das Gulati in 1951</span>, emerged from a transport business to the giants in the fields of education, services, transportation, and journalism. The group made a mammoth leap in the education arena in the mid-80s by being the pioneers in computer education.</p>
+
+        <p>Now, with <span style="font-weight: bold;">09 well-established institutes</span> in Allahabad and Greater Noida, over <span>11200 students</span>, and more than <span>750 faculty members</span>, the United Group of Institutions is poised to reach the next level, providing the best technical education. Our establishment offers NBA accredited courses, Quality recognized by the World Bank, and boasts of more than <span>14000 alumni</span> base. Our placement scenario is booming with over <span style="font-weight: bold;">11400 jobs</span> already offered and state-of-the-art facilities provided to faculty and students alike. Fortified with these features, the United Group is primed to continue taking the world of quality education to the highest attainable limits. All the Institutions are affiliated with UPTU, Lucknow, and approved by All India Council for Technical Education (AICTE), Ministry of Human Resources Development, Government of India, New Delhi.</p>
+    </div>
+    <div class="text-center"> <!-- Added a wrapper div with text-center class -->
+        <button class="btn btn-primary">Learn More</button>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
+            <!-- Your existing content... -->
+            <h1 class="text-center text-capitalize pt-5 pt-5">Our <span class="text-primary">Programs</span></h1>
+            <hr class="w-25 mx-auto">
+
+            <div class="row text-center mb-5 ">
+                <div class="col-lg-4 col-md-4 col-12 shadow-sm p-3 mb-5 bg-white rounded" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);">
+                    <div class="card" style="width:300px ;">
+                        <img class="card-img-top" src="css/d1.jpg" alt="Card image" style="width:300px ;height:300px">
+                        <div class="card-body bg-primary">
+                            <h3 class="text-light mt-3">BCA(hons)</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 shadow-sm p-3 mb-5 bg-white rounded" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);">
+                    <div class="card" style="width:300px ;">
+                        <img class="card-img-top" src="css/d3.jpg" alt="Card image" style="width:300px ;height:300px">
+                        
+                        <div class="card-body bg-primary">
+                            <h3 class="text-light mt-3">MBA</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 shadow-sm p-3 mb-5 bg-white rounded" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);">
+                    <div class="card" style="width:300px ;">
+                        <img class="card-img-top" src="css/d2.jpg" alt="Card image" style="width:300px ;height:300px">
+                        <div class="card-body bg-primary">
+                            <h3 class="text-light mt-3">Students Club</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="text-center mt-3">
+        <button class="btn btn-danger" id="logoutBtn" onclick="window.location.href='/'" >Logout</button>
+    </div>
+
+
+    <section class="bg-primary ">
+        <article class="py-5 text-center text-white">
+            <div>
+                <h3 class="display-4" style="font-weight: bold;">Contact Us</h3>
+                <p style="font-size: large;"><b>Hello! We are here to help you.</b></p>
+                <button class="btn btn-warning">Contact Now</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-light text-center py-3">
+        <p>&copy; 2024 College Complaint System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Blinking Animation
+        setInterval(() => {
+            $('.blink').fadeOut(500).fadeIn(500);
+        }, 1000);
+
+        // Additional animation on page load
+        $(document).ready(function () {
+            $('.navbar').animate({
+                opacity: 0.8,
+                marginTop: '20px'
+            }, 1000);
+        });
+
+        // Custom animation on button click
+        $('button.btn-primary').click(function () {
+            $(this).animate({
+                fontSize: '24px',
+                backgroundColor: '#FFD700'
+            }, 500);
+        });
+/*
+if ('speechSynthesis' in window) {
+    // Function to speak the welcome message
+    function speakWelcomeMessage() {
+        const welcomeMessage = new SpeechSynthesisUtterance('Welcome to our complain website');
+        speechSynthesis.speak(welcomeMessage);
+    }
+
+    // Call the function when the page loads
+    window.addEventListener('load', speakWelcomeMessage);
+}
+*/
+    </script>
+
+</body>
+
+</html>

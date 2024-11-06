@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints Table</title>
+  <style>
+    body {
+      overflow: auto;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white; /* Set text color to white */
+    }
+
+    th, td {
+      text-align: center;
+    }
+    .showComplaintBtn,.showActionBtn{
+  background-color: #e8f3e8;
+      color: rgb(39, 39, 41);
+      padding: 9px 13px;
+      border:2px solid black;
+        font-size: 13px;
+        font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+.showComplaintBtn:hover{
+   background-color: #04dd04be;
+   color: white;
+}
+.showActionBtn:hover{
+   background-color: #04dd04be;
+   color: white;
+}
+
+    td, tbody tr {
+      background-color: rgb(238, 7, 30); /* Default background color for tr */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Apply truncation to table cells */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 30px; /* Increased padding for bigger button */
+      border: none;
+      border-radius: 8px; /* Adjust border radius for a rounded button */
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 0 auto; /* Center the button horizontally */
+      margin-top: 10px;
+      display: block; /* Ensure the button takes full width */
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Add some button styles */
+    .btn {
+      background-color: #4CAF50; /* Green */
+      border: 2px solid black; /* Black border */
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      margin: 20px auto; /* Center horizontally */
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+
+    .btn:hover {
+      background-color: black; /* Darker Green */
+      color: white;
+    }
+
+    /* Hide form initially */
+    #actionForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #actionTextarea {
+      width: 100%;
+      height: 200px; /* Adjust textarea height */
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Styles for expanded table */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* Set maximum width as needed */
+      cursor: pointer;
+    }
+
+    /* Style for image link */
+    .image-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+     .styled-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.styled-input:focus {
+  border-color: #007bff;
+}
+
+   .search-container {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 20px; /* Add space between elements */
+}
+
+.search-label {
+  margin-right: 10px; /* Add some space between labels and input/select elements */
+}
+
+.styled-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Adjust the width of the input and select elements as needed */
+#dateFilter,
+#categoryFilter,
+#complainFilter {
+  width: 150px;
+}
+ 
+.refresh-button {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+.header-container {
+  overflow: hidden;
+  background-color: rgb(39, 39, 40); /* Blue background color */
+  color:white; /* White text color */
+  height: 30px; /* Adjust height as needed */
+  font-family: serif;
+  font-weight: bold;
+}
+
+.header-animation {
+  position: relative;
+  animation: slideFromRight 10s linear infinite; /* Adjust animation duration and timing as needed */
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  right: -100px; /* Start position outside the view */
+  font-size: 24px; /* Adjust font size as needed */
+}
+
+@keyframes slideFromRight {
+  from {
+    right: -100px; /* Start position outside the view */
+  }
+  to {
+    right: 100%; /* End position at the end of the container */
+  }
+}
+    
+
+  </style>
+</head>
+<body>
+   <div class="header-container">
+    <div class="header-animation">
+      <span class="header-text">UNITED COLLEGE ENGINEERING AND RESEARCH</span>
+    </div>
+  </div>
+  <button id="refreshButton" class="refresh-button">Refresh</button>
+
+  
+  
+    
+    <table id="complaintsTable" class="truncate-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          
+          <th>Student Id</th>
+          <th>Branch</th>
+          <th>Semester</th>
+         
+<!-- Added column for Image -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each complaints}}
+          <tr>
+           <td>{{name}}</td>  
+           <td>{{studentId}}</td> 
+           <td>{{branch}}</td>  
+           <td>{{semester}}</td>   
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  
+
+
+  <script>
+   
+  </script>
+</body>
+</html>

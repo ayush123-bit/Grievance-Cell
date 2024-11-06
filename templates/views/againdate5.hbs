@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Complaints</title>
+  <style>
+    body {
+      overflow: auto;
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: black;
+      color: white; /* Set text color to white */
+    }
+
+    th, td {
+      text-align: center;
+    }
+
+    tbody tr {
+      background-color: #f8f8f8; /* Default background color for tr */
+    }
+
+    tbody tr.satisfied-yes {
+      background-color: green; /* Change background color for satisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+    tbody tr.satisfied-no {
+      background-color: red; /* Change background color for unsatisfied complaints */
+      color: white; /* Set text color to white */
+    }
+
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+}
+.showComplaintBtn,.showActionBtn{
+  background-color: #e8f3e8;
+      color: rgb(39, 39, 41);
+      padding: 9px 13px;
+      border:2px solid black;
+        font-size: 13px;
+        font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+}
+.showComplaintBtn:hover{
+   background-color: #007bff;
+   color: white;
+}
+.showActionBtn:hover{
+   background-color: #007bff;
+   color: white;
+}
+.refresh-button {
+  position: fixed;
+  top: 90px;
+  right: 30px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.log-button {
+  position: fixed;
+  top: 35px;
+  right: 10px;
+  padding: 8px 15px;
+  background-color: #abcdf2;
+  color: black;
+  border: 2px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+
+    /* Add some button styles */
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border:2px solid black;
+       
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+     
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    #submitBtn {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+     #sendEmailBtn{
+      margin-top: 10px;
+      font-size: 16px;
+      background-color: rgb(255, 140, 0);
+    }
+
+    #actionForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #actionTextarea {
+      width: 700px;
+      height: 200px; /* Adjust textarea height */
+      resize: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Truncate long content with ellipsis */
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px; /* Set maximum width as needed */
+      cursor: pointer;
+    }
+    .image-link {
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    
+
+    
+    /* Style for the label */
+
+    
+    /* Style for the date input box */
+    
+    .styled-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.styled-input:focus {
+  border-color: #007bff;
+}
+
+   .search-container {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  gap: 20px; /* Add space between elements */
+}
+
+.search-label {
+  margin-right: 10px; /* Add some space between labels and input/select elements */
+}
+
+.styled-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Adjust the width of the input and select elements as needed */
+#dateFilter,
+#categoryFilter,
+#complainFilter {
+  width: 150px;
+}
+.header-container {
+  overflow: hidden;
+  background-color: rgb(39, 39, 40); /* Blue background color */
+  color:white; /* White text color */
+  height: 30px; /* Adjust height as needed */
+  font-family: serif;
+  font-weight: bold;
+}
+     #blockBtn{
+      margin-top: 10px;
+      font-size: 16px;
+      background-color: rgb(13, 13, 13);
+    }
+         #unblockBtn{
+      margin-top: 10px;
+      font-size: 16px;
+      background-color: rgb(29, 146, 219);
+    }
+
+
+.header-animation {
+  position: relative;
+  animation: slideFromRight 10s linear infinite; /* Adjust animation duration and timing as needed */
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  right: -100px; /* Start position outside the view */
+  font-size: 24px; /* Adjust font size as needed */
+}
+
+@keyframes slideFromRight {
+  from {
+    right: -100px; /* Start position outside the view */
+  }
+  to {
+    right: 100%; /* End position at the end of the container */
+  }
+}
+
+ .unsolved-no-action {
+    background-color: red; /* Red background */
+    color: white; /* White text */
+  }
+
+  /* Styles for unresolved complaints with 1 to 3 actions taken */
+  .unsolved-action-taken {
+    background-color: rgba(255, 255, 0, 0.849); /* Yellow background */
+    color: black; /* Black text */
+  }
+
+  /* Styles for unresolved complaints with more than 3 actions taken */
+  .unsolved-max-action {
+    background-color: orange; /* Orange background */
+    color: black; /* Black text */
+  }
+
+  /* Styles for satisfied complaints */
+  .satisfied {
+    background-color: green; /* Green background */
+    color: white; /* White text */
+  }
+  
+    .legend-container {
+       /* Horizontally center the content */
+      margin: 20px auto; /* Center the container horizontally */
+      padding: 20px;
+      background-color: #f0f0f0; /* Background color for the box */
+      border: 1px solid #ccc; /* Border */
+      border-radius: 8px; /* Rounded corners */
+      width: fit-content; /* Adjust width based on content */
+    }
+
+    .legend-container h4 {
+      margin-bottom: 10px; /* Add space below the title */
+    }
+
+    .legend-container ul {
+      list-style-type: none; /* Remove bullet points */
+      padding: 0;
+    }
+
+    .legend-container li {
+      margin-bottom: 5px; /* Add space between list items */
+    }
+
+    .legend-container li span {
+      display: inline-block;
+      width: 20px; /* Width of the legend color box */
+      height: 10px; /* Height of the legend color box */
+      margin-right: 10px; /* Add space between color box and text */
+    }
+
+    /* Define colors for legend items */
+    .satisfied-legend { background-color: green; }
+    .unsolved-no-action-legend { background-color: red; }
+    .unsolved-action-taken-legend { background-color: yellow; }
+    .unsolved-max-action-legend { background-color: orange; }
+    #totalComplaints{
+      text-align: center;
+    }
+      #facultySelect {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+  }
+  #facultySelect:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 175, 233, .6);
+  }
+  .back-arrow {
+    cursor: pointer;
+    font-size: 20px;
+    float: left;
+    margin-right: 10px;
+  }
+   .btn-container {
+    margin: 20px;
+    display: flex; /* Use flexbox for aligning buttons */
+    justify-content: center;
+    /* Align items from the start */
+  }
+  #submitBtn,#facultyBtn{
+    margin: 20px;
+  }
+
+  
+
+
+ 
+  </style>
+</head>
+<body>
+  <div class="header-container">
+    <div class="header-animation">
+      <span class="header-text">UNITED  COLLEGE  ENGINEERING  AND  RESEARCH</span>
+    </div>
+  </div>
+  <button  class="log-button" onclick="window.location.href='/'">Log out</button>
+  <button id="refreshButton" class="refresh-button">All</button>
+  <div class="legend-container">
+    <h4>Color decoding:</h4>
+    <ul>
+      <li><span class="satisfied-legend"></span> Satisfied Complaints:<b>Green</b></li>
+      <li><span class="unsolved-no-action-legend"></span> Unresolved Complaints (No Action Taken):<b>Red</b></li>
+      <li><span class="unsolved-action-taken-legend"></span> Unresolved Complaints (1-3 Actions Taken):<b>Yellow</b></li>
+      <li><span class="unsolved-max-action-legend"></span> Unresolved Complaints (More than 3 Actions Taken):<b>Orange</b></li>
+    </ul>
+  </div>
+ <h3 id="date-head">Complaints sorted by date:</h3>
+  <h2 id="totalComplaints">Total Complains:54</h2>
+  <div class="search-container">
+    <label for="dateFilter" class="search-label">Search :</label>
+    <input type="date" id="dateFilter" class="styled-input">
+  
+  
+  
+               
+               
+                <label for="complainFilter" class="search-label">Complain:</label>
+               <select id="complainFilter" class="styled-input">
+                  <option value="All">All</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="unresolved">Unresolved</option>
+                   
+                </select>
+
+                 <label for="semesterFilter" class="search-label">Select Semester:</label>
+            <select id="semesterFilter" class="styled-input">
+                <option value="">All</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+                
+            </select>
+
+            
+
+
+
+
+  </div>
+  <table  id="complaintsTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Category</th>
+                 <th>Branch</th>
+        <th>Semester</th>
+        
+        <th>Complaint</th>
+         <th>Action Taken</th>
+        <th>Feedback</th>
+        <th>Satisfied</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each complaints}}
+  <tr class="{{formatSatisfied sortedcomplaint.satisfied sortedcomplaint.actionTaken.length}}">
+          <td class="truncate">{{formatDate sortedcomplaint.date}}</td>
+          <td class="truncate">{{id}}</td>
+          <td class="truncate">{{name}}</td>
+          <td class="truncate">{{sortedcomplaint.category}}</td>
+           <td class="truncate">{{branch}}</td>
+          <td class="truncate">{{semester}}</td>
+          
+          
+          <td class="truncate">
+  <!-- Button to toggle complaint content -->
+  <button class="showComplaintBtn">Show Complaint</button>
+  <div class="complaintContent" style="display: none;">
+    <!-- Complaint content -->
+    <span>{{sortedcomplaint.complain}}</span>
+ {{#if sortedcomplaint.url}}
+      <p class="image-link" data-image-url="images/{{sortedcomplaint.url}}">View Image</p>
+    {{/if}}
+ </div>
+</td>
+          <td class="truncate">
+  {{#if sortedcomplaint.actionTaken.length}}
+    <!-- Button to toggle action taken content -->
+    <button class="showActionBtn">Show Action</button>
+    <div class="actionContent" style="display: none;">
+      <!-- Action taken content -->
+      {{#each sortedcomplaint.actionTaken}}
+        <div>
+          Action {{increment @index}}: {{this.action}}
+          {{#if this.url2}} 
+         <p>URL {{increment @index}}: <span class="image-link" data-image-url="images/{{this.url2}}">View image</span></p> 
+          {{/if}}
+        <p> Date {{increment @index}}: {{formatDate this.date}} </p>
+        
+        </div>
+        <hr>
+      {{/each}}
+    </div>
+  {{else}}
+    No Action Taken
+  {{/if}}
+</td>
+          
+          <td class="truncate">{{sortedcomplaint.feedback}}</td>
+          <td class="truncate">{{sortedcomplaint.satisfied}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+<form id="actionForm" enctype="multipart/form-data">
+<span id="backBtn" class="back-arrow">&#8592;</span> <!-- Back button -->
+
+  <span id="closeFormBtn" class="close">&times;</span> <!-- Close button -->
+  <div id="formContent">
+    <textarea id="actionTextarea" placeholder="Enter action taken..." name="textarea"></textarea><br>
+  </div>
+  <input type="file" id="fileInput" name="fileInput"><br> <!-- Added file input field -->
+  <div class="btn-container">
+    <input type="submit" value="Submit" id="submitBtn" class="btn">
+    <button type="button" id="blockBtn" class="btn">Block</button>
+    <button type="button" id="unblockBtn" class="btn">Unblock</button>
+    
+  </div>
+</form>
+  <script>
+    let bflag=0;
+    let currentCategory = null;
+    let currentName1 = '';
+      let currentStudentId1 = '';
+      let currentDate1 = '';
+      let currentComplain1 = '';
+    document.addEventListener('DOMContentLoaded', function () {
+      const refreshButton = document.getElementById('refreshButton');
+
+  // Add click event listener to the refresh button
+  refreshButton.addEventListener('click', function () {
+    location.reload(); // Reload the page to its initial state
+  });
+
+   const messageElement = document.createElement('div');
+  messageElement.textContent = 'Double click to write action taken!';
+  messageElement.style.cssText = `
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color:white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  `;
+
+  // Append the message element to the document body
+  document.body.appendChild(messageElement);
+
+  // Automatically remove the message after 5 seconds (5000 milliseconds)
+  setTimeout(function () {
+    // Remove the message element from the DOM
+    document.body.removeChild(messageElement);
+  }, 5000);
+
+  // Rest of your JavaScript code...
+
+ document.getElementById('backBtn').style.display='none';
+
+     var initialFormState = document.getElementById('formContent').innerHTML;
+
+      const tableCells = document.querySelectorAll('#complaintsTable tbody tr td');
+      const imageLinks = document.querySelectorAll('.image-link');
+     const closeFormBtn = document.getElementById('closeFormBtn');
+
+  // Add click event listener to the close button
+  closeFormBtn.addEventListener('click', function () {
+    // Hide the form
+    document.getElementById('submitBtn').style.display='block';
+        document.getElementById('formContent').innerHTML = initialFormState;
+
+    document.getElementById('actionForm').style.display = 'none';
+          isFormVisible = !isFormVisible;
+  });
+
+  // Add click event listener to the close button
+ 
+
+      // Add click event listener to toggle text truncation
+      tableCells.forEach(cell => {
+        cell.addEventListener('click', function () {
+          // Toggle the class to switch between truncated and expanded text
+          if (cell.classList.contains('truncate')) {
+            // Expanded to full text
+            cell.classList.remove('truncate');
+          } else {
+            // Shortened with ellipsis
+            cell.classList.add('truncate');
+          }
+        });
+      });
+
+      // Add click event listener to image links
+      imageLinks.forEach(link => {
+        link.addEventListener('click', function () {
+          const imageUrl = this.getAttribute('data-image-url');
+          if (imageUrl) {
+            toggleImageFullscreen(imageUrl);
+          }
+        });
+      });
+
+      // Function to toggle image fullscreen
+      function toggleImageFullscreen(imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          max-width:75vw;
+          max-height: 100vh;
+          z-index: 9999;
+          background-color: rgba(0, 0, 0, 0.8);
+          cursor: zoom-out;
+        `;
+
+        // Close fullscreen image on click
+        imageElement.addEventListener('click', function () {
+          document.body.removeChild(imageElement);
+        });
+
+        document.body.appendChild(imageElement);
+      }
+
+      const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+      let isFormVisible = false;
+      let currentName = '';
+      let currentStudentId = '';
+      let currentDate = '';
+      let currentComplain = '';
+      let currentActionTaken = '';
+      let currentFeedback = '';
+      let currentSatisfied = '';
+      let fbranch='';
+      let fsamester='';
+
+      tableRows.forEach(row => {
+        row.addEventListener('dblclick', function () {
+          isFormVisible = !isFormVisible;
+           
+    const blockstudent=row.querySelector('td:nth-child(2)').innerText;
+    const data={
+     studentId:blockstudent
+}
+
+
+        fetch('/blockvision', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        
+        
+        bflag=data.block;
+        console.log(bflag);
+              if (bflag == 0) {
+        document.getElementById('blockBtn').style.display = 'block';
+        document.getElementById('unblockBtn').style.display = 'none';
+      }
+      if (bflag == 1) {
+        document.getElementById('unblockBtn').style.display = 'block';
+        document.getElementById('blockBtn').style.display = 'none';
+      }
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      
+      });
+       
+  
+    
+          document.getElementById('actionForm').style.display = isFormVisible ? 'block' : 'none';
+
+          if(isFormVisible){
+            currentName = row.querySelector('td:nth-child(3)').innerText;
+            currentName1=currentName;
+            currentStudentId = row.querySelector('td:nth-child(2)').innerText;
+            currentStudentId1=currentStudentId;
+            currentDate = row.querySelector('td:nth-child(1)').innerText;
+            currentDate1=currentDate;
+                    currentCategory = row.querySelector('td:nth-child(4)').innerText;
+                 fbranch=row.querySelector('td:nth-child(5)').innerText;
+                 fsamester=row.querySelector('td:nth-child(6)').innerText;
+const spanElement = row.querySelector('.complaintContent span');
+
+// Retrieve the text content of the span element
+const complaintText = spanElement.textContent.trim();
+
+currentComplain = complaintText;
+            currentComplain1=currentComplain;
+            currentFeedback = row.querySelector('td:nth-child(9)').innerText;
+            currentSatisfied = row.querySelector('td:nth-child(10)').innerText;
+          }
+        });
+
+        
+      });
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  
+  // Continuously listen for speech input
+  recognition.continuous = true;
+  
+  // Start speech recognition as soon as the form opens
+  recognition.start();
+
+  // Update the text area with recognized speech
+  recognition.onresult = function(event) {
+    // Get the latest recognized speech from the event
+    const latestSpeech = event.results[event.results.length - 1][0].transcript;
+    // Update the action taken text area with the recognized speech
+    document.getElementById('actionTextarea').value += latestSpeech + ' ';
+  };
+          
+      document.getElementById('actionForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const actionTaken = document.getElementById('actionTextarea').value.trim();
+        const fileInput = document.getElementById('fileInput').files[0]; // Get the selected file
+
+
+
+   const formData = new FormData();
+    formData.append('actionTaken', actionTaken);
+    formData.append('file', fileInput);
+    formData.append('name', currentName);
+    formData.append('studentId', currentStudentId);
+    formData.append('date', currentDate);
+    formData.append('complain', currentComplain);
+    formData.append('feedback', currentFeedback);
+    formData.append('satisfied', currentSatisfied);
+         console.log(formData);
+    fetch('/textarea', {
+      method: 'POST',
+      body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          alert('Form submitted successfully!');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while submitting the form.');
+        });
+
+        document.getElementById('actionForm').style.display = 'none';
+      });
+           
+
+      
+  
+  // Add click event listeners to action buttons
+  const showActionBtns = document.querySelectorAll('.showActionBtn');
+  showActionBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest action content div within the same row
+      const actionContent = this.parentElement.querySelector('.actionContent');
+      // Toggle visibility of action content
+      actionContent.style.display = actionContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+  // Other JavaScript code...
+    const showComplaintBtns = document.querySelectorAll('.showComplaintBtn');
+  showComplaintBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      // Find the closest complaint content div within the same row
+      const complaintContent = this.parentElement.querySelector('.complaintContent');
+      // Toggle visibility of complaint content
+      complaintContent.style.display = complaintContent.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+
+
+   function convertDateFormat(inputDate) {
+    var parts = inputDate.split('-');
+    return parts[2] + '/' + parseInt(parts[1]) + '/' + parts[0];
+}
+const dateFilter = document.getElementById('dateFilter');
+const complainFilter = document.getElementById('complainFilter');
+const semesterFilter = document.getElementById('semesterFilter');
+
+function updateTableVisibility() {
+    const selectedComplain = complainFilter.value;
+    const selectedSemester = semesterFilter.value;
+    const selectedDate = dateFilter.value ? convertDateFormat(dateFilter.value) : '';
+
+    const tableRows = document.querySelectorAll('#complaintsTable tbody tr');
+    tableRows.forEach(row => {
+        const rowSatisfied = row.querySelector('td:nth-child(10)').textContent.trim();
+        const rowSemester = row.querySelector('td:nth-child(6)').textContent.trim();
+        const rowDate = row.querySelector('td:nth-child(1)').textContent.trim();
+        const convertedRowDate = rowDate.split(',')[0].trim();
+
+        // Check if all filter criteria match
+        const complainMatch =
+            selectedComplain === 'All' ||
+            (selectedComplain === 'resolved' && rowSatisfied === 'Yes') ||
+            (selectedComplain === 'unresolved' && (rowSatisfied === '' || rowSatisfied === 'No'));
+        const semesterMatch = selectedSemester === '' || selectedSemester === rowSemester;
+
+        let dateMatch = true;
+        // Check date match only if a date is selected
+        if (selectedDate !== '') {
+            dateMatch = selectedDate === convertedRowDate;
+        }
+
+        // Show row only if all criteria match
+        if (complainMatch && semesterMatch && dateMatch) {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    updateTotalComplaints();
+}
+
+// Add change event listeners to all filters
+complainFilter.addEventListener('change', updateTableVisibility);
+semesterFilter.addEventListener('change', updateTableVisibility);
+dateFilter.addEventListener('change', updateTableVisibility);
+
+   
+   /* if ('speechSynthesis' in window) {
+    // Function to speak the welcome message
+    function speakWelcomeMessage() {
+        const welcomeMessage = new SpeechSynthesisUtterance('This is our complain table . Double click on rows to write action taken.');
+        speechSynthesis.speak(welcomeMessage);
+    }
+
+    // Call the function when the page loads
+    window.addEventListener('load', speakWelcomeMessage);
+}*/
+
+
+// Check browser support for the Web Speech API
+const blockBtn = document.getElementById('blockBtn');
+           bflag=1;
+  // Add click event listener to the send email button
+  blockBtn.addEventListener('click', function () {
+    event.preventDefault();
+    // Extract the category of the complaint
+   
+    // Check if a category is selected
+   
+    const data={
+     
+      studentId:currentStudentId1
+
+
+    }
+
+    // Send POST request to the server with category information
+    fetch('/block', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert('Student has been blocked!');
+        isFormVisible = !isFormVisible;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending the email.');
+      });
+       document.getElementById('actionForm').style.display = 'none';
+  });
+
+
+const unblockBtn = document.getElementById('unblockBtn');
+           bflag=0;
+  // Add click event listener to the send email button
+  unblockBtn.addEventListener('click', function () {
+    event.preventDefault();
+    // Extract the category of the complaint
+   
+    // Check if a category is selected
+   
+    const data={
+     
+      studentId:currentStudentId1
+
+
+    }
+
+    // Send POST request to the server with category information
+    fetch('/unblock', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert('Student has been unblocked!');
+        isFormVisible = !isFormVisible;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending the email.');
+      });
+       document.getElementById('actionForm').style.display = 'none';
+  });
+/*
+document.getElementById('facultyBtn').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the form from being submitted
+
+  // Show the back button
+  document.getElementById('backBtn').style.display = 'block';
+
+  // Get the form content div
+  var formContent = document.getElementById('formContent');
+
+  // Replace the textarea with a select drop-down
+  formContent.innerHTML = `
+    <select id="facultySelect" name="facultySelect">
+      <option value="">Select Faculty Member</option>
+      <option value="faculty1@example.com">Faculty Member 1</option>
+      <option value="faculty2@example.com">Faculty Member 2</option>
+      <option value="faculty3@example.com">Faculty Member 3</option>
+    </select><br>
+  `;
+
+  // Hide the file input and other buttons
+  document.getElementById('fileInput').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('facultyBtn').style.display = 'none';
+  document.getElementById('blockBtn').style.display = 'none';
+  document.getElementById('unblockBtn').style.display = 'none';
+
+  // Handle change event on select dropdown
+  document.getElementById('facultySelect').addEventListener('change', function() {
+    const selectedFaculty = this.value;
+    if (selectedFaculty) {
+      // Ask for confirmation
+      if (confirm(`Send email to ${selectedFaculty}?`)) {
+        // Find the currently selected row in the table
+        const selectedRow = document.querySelector('#complaintsTable tbody tr.selected');
+        if (!selectedRow) {
+          alert('No row selected.');
+          return;
+        }
+
+        // Extract data from the selected row
+        const branch = selectedRow.querySelector('td:nth-child(5)').textContent.trim(); // Adjust based on your table structure
+        const semester = selectedRow.querySelector('td:nth-child(6)').textContent.trim(); // Adjust based on your table structure
+        const complaint = selectedRow.querySelector('.complaintContent span').textContent.trim(); // Adjust based on your table structure
+
+        // Prepare data to send
+        const dataToSend = {
+          faculty: selectedFaculty,
+          complaint: complaint,
+          branch: branch,
+          semester: semester
+          // Add more data fields as needed
+        };
+
+        // Send data to server
+        fetch('/facultycomplaintemail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataToSend)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Success:', data);
+          // Optionally handle success response
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Optionally handle error
+        });
+
+        // Reset form after sending (if needed)
+        // Optionally, you can reset form elements here
+      }
+    } else {
+      alert('Please select a faculty member.');
+    }
+  });
+});*/
+
+    document.getElementById('backBtn').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default action
+     document.getElementById('facultyBtn').style.display = 'block';
+  document.getElementById('backBtn').style.display='none';
+    // Restore the initial form state
+    document.getElementById('formContent').innerHTML = initialFormState;
+
+    // Enable the Submit and Block buttons
+    document.getElementById('fileInput').style.display='block';
+    document.getElementById('submitBtn').style.display ='block';
+    document.getElementById('facultyBtn').style.display ='block';
+    if(bflag==0)
+    document.getElementById('blockBtn').style.display = 'block';
+    if(bflag==1)
+    document.getElementById('unblockBtn').style.display = 'block';
+  });
+
+
+    });
+      function updateTotalComplaints() {
+    // Get the table body
+    const tableBody = document.querySelector('#complaintsTable tbody');
+    
+    // Get all rows in the table body
+    const rows = tableBody.querySelectorAll('tr');
+    
+    // Initialize a counter for visible rows
+    let visibleRowCount = 0;
+    
+    // Loop through each row and check if it's visible
+    rows.forEach(row => {
+      if (row.style.display !== 'none') {
+        visibleRowCount++;
+      }
+    });
+    
+    // Update the total complaints heading with the visible row count
+    const totalComplaintsHeading = document.querySelector('#totalComplaints');
+    totalComplaintsHeading.textContent = `Total Complaints: ${visibleRowCount}`;
+  }
+
+  // Call the function initially to set the correct total complaints count
+  updateTotalComplaints();
+
+  </script>
+</body>
+</html>

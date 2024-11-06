@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script>
+       
+
+        function setFormAction(action) {
+            document.getElementById('fm').action = action;
+            document.getElementById('fm').method = 'post'; // Assuming you want to use the POST method
+        }
+       function updatevalue(inputElement) {
+        // Extract the value property from the input element
+        var val = inputElement.value;
+        
+        // Update the value of the 'sec' input element
+        document.getElementById('sec').value = val;
+    }
+    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #0811172b, #2c3e50);
+            overflow: hidden;
+        }
+
+        #dashboard {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: -20px -14px 18px 6px rgb(2 54 68);
+            padding: 23px;
+            width: 80%;
+            max-width: 632px;
+            text-align: center;
+            position: relative;
+            animation: slideInAndShake 1.5s ease-out;
+        }
+
+        .category {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .teacher-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            transition: box-shadow 0.3s, transform 0.3s;
+            animation: fadeInDown 0.5s ease-out;
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .semester-section-selector {
+            margin-bottom: 20px;
+        }
+
+        /* Style the dropdowns */
+        input,select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #ecf0f1;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Style the links as buttons with hover effect */
+        .complaint-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .complaint-links button{
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .resolved {
+            background-color: #4caf50;
+        }
+
+        .unresolved {
+            background-color: #e74c3c;
+        }
+
+     .all {
+            background-color: #3498db;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://subtlepatterns.com/patterns/axiom.png');
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Animation */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for left to right movement with tilt and shake */
+        @keyframes slideInAndShake {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotate(-5deg);
+            }
+            50% {
+                transform: translateX(0) rotate(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotate(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard">
+        <div class="background-pattern"></div>
+        <div class="category">{{d}} Department</div>
+        
+        <div class="teacher-name">Teacher Name: {{t}}</div>
+
+        <div class="semester-section-selector">
+
+
+            <form id="fm">
+            <label for="complaintCategory">Faculty: Category</label>
+            
+ <input type="text" placeholder="Category" value="{{val}}" name="category" readonly >
+
+
+            <label for="branch">Select Branch:</label>
+            <select id="branch" name="branch">
+                
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="financial">Electrical</option>
+                <option value="computer">Civil</option>
+            </select>
+
+            <label for="semester">Select Semester:</label>
+            <select id="semester" name="semester">
+                 
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+            <option value="7">Semester 8</option>
+                
+            </select>
+
+            <label for="section">Select Section:</label>
+<input name="section" placeholder="SECTION" id="sec" value="All" oninput="updatevalue(this)">
+        </div>
+
+        <div class="complaint-stats">
+            <h3>Complaint Statistics</h3>
+            <div class="complaint-links">
+                <div class="tooltip">
+                   <button type="submit" onclick="setFormAction('/resolved')" id="btn3" class="resolved">Resolved</button>
+                    <span class="tooltiptext"></span>
+                </div>
+                <div class="tooltip">
+                  <button type="submit" onclick="setFormAction('/unresolved2')" id="btn3" class="unresolved">Unresolved</button>
+                    <span class="tooltiptext"></span>
+                </div>
+                <div class="tooltip">
+                  <button type="submit" onclick="setFormAction('/complaindata')" id="btn3" class="all">All</button>
+                    <span class="tooltiptext"></span>
+                </div>
+                 <div class="tooltip">
+                  <button type="submit" onclick="setFormAction('/DateWise2')" id="btn3" class="all">Date</button>
+                    <span class="tooltiptext"></span>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="college-info">
+            <h2>College Information</h2>
+            <p>Welcome to Our College Dashboard. Here, you can manage and view complaints related to different departments.</p>
+            <p>For any assistance, please contact the college administration.</p>
+        </div>
+    </div>
+</body>
+</html>
