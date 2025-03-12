@@ -175,6 +175,24 @@ app.get('/',(req,res)=>{
     });
     
 //=========================================================================================
+app.post('/teacherlogin', async (req, res) => {
+    try {
+        const { tid, password } = req.body;
+        const data = await UCER2({ teacherId: tid, password });
+
+        if (!data) {
+            return res.status(404).send({ message: "Not found" });
+        }
+        specialtid=tid;
+        if (tid === '6720') {
+            return res.send({ message: "Admin" });
+        } else {
+            return res.send({ message: "Teacher" });
+        }
+    } catch (error) {
+        return res.status(500).send({ message: "Internal Server Error", error: error.message });
+    }
+});
 
 //===========================================================================================
 
@@ -562,16 +580,16 @@ if(matchingComplaint.actionTaken.length==0){
 //=======================================================
 const bodyParser = require('body-parser');
 
-const twilio = require('twilio');
-const { LogInstance } = require("twilio/lib/rest/serverless/v1/service/environment/log");
+// const twilio = require('twilio');
+// const { LogInstance } = require("twilio/lib/rest/serverless/v1/service/environment/log");
 
 
-const client = twilio(
-    process.env.TWILIOFIRST,
-    process.env.TWILIOSECOND
-);
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// const client = twilio(
+//     process.env.TWILIOFIRST,
+//     process.env.TWILIOSECOND
+// );
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 //==============================================================
 app.get('/teacherv',(req,res)=>{
     res.render("teacherv");
@@ -1210,15 +1228,33 @@ app.get('/staff',async(req,res)=>{
     });
 })
   
-app.get('/admin',async(req,res)=>{
-    const result=await UCER2.find({teacherId:specialtid});
-    tname=result[0].name;
-    const tn=tname.toUpperCase();
-    res.render("faculty", {
-        nm: tn,
-        anchorlink:'/cd'
-    });
-})
+app.get('/admin', async (req, res) => {
+    try {
+        console.log(specialtid);
+
+    
+
+        const result = await UCER2.find({ teacherId: specialtid });
+
+        if (result.length === 0) {
+            return res.status(404).send({ message: "No teacher found" });
+        }
+
+        console.log(result);
+
+        const tname = result[0].name;
+        const tn = tname.toUpperCase();
+
+        res.render("faculty", {
+            nm: tn,
+            anchorlink: '/cd'
+        });
+
+    } catch (error) {
+        return res.status(500).send({ message: "Internal Server Error", error: error.message });
+    }
+});
+
   
   //========================================================================================
   

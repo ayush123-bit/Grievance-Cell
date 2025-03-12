@@ -451,7 +451,7 @@ h1 {
         <p class="forgot-password-link" onclick="openForgotPasswordModal1()">Forgot Password?</p>
       </form>
     
-      <form class="login-form" id="teacherLoginForm" action="/teacherlogin" method="POST">
+      <form class="login-form" id="teacherLoginForm">
         <label for="teacherUsername">Teacher ID:</label>
         <input type="text" id="teacherId" placeholder="Enter your username" name="tid">
     
@@ -622,11 +622,11 @@ function closeForgotPasswordModal2() {
 
     const data = await response.json();
 
-    if (data.success && data.message=="Admin") {
+    if (response.ok && data.message=="Admin") {
       // Login successful, redirect or perform other actions
       window.location.href='/admin'
     }
-    else if(data.success && data.message=="Teacher"){
+    else if(response.ok && data.message=="Teacher"){
       window.location.href='/staff'
 
     }
