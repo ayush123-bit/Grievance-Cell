@@ -261,7 +261,7 @@ app.post('/complain', async (req, res) => {
         });
 
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: email,
             subject: "Complaint Received",
             html: `<p><b>Dear ${name},</b></p>
@@ -300,8 +300,8 @@ app.post('/complain', async (req, res) => {
                         });
             
                         const mailOptions = {
-                            from: "process.env.EMAIL_USER",
-                            to: "process.env.EMAIL_USER",
+                            from:process.env.EMAIL_USER,
+                            to:process.env.EMAIL_USER,
                             subject: "Unfulfilled Complaint",
                             html: `
                                 <p>Name: ${name}</p>
@@ -326,7 +326,7 @@ app.post('/complain', async (req, res) => {
                     } catch (err) {
                         console.log(err);
                     }
-                },60*1000);
+                },60000*7200);
             }
         })}
     }
@@ -508,7 +508,7 @@ if(matchingComplaint.actionTaken.length==0){
         });
           if(satisfied=="No"){
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: student.email, 
             subject: "Your feedback is important to us!",
             html: `<p>Dear<b> ${student.name},</b></p>
@@ -541,7 +541,7 @@ if(matchingComplaint.actionTaken.length==0){
         }
           else{
             const mailOptions = {
-                from: "process.env.EMAIL_USER",
+                from:process.env.EMAIL_USER,
                 to: student.email, 
                 subject: "Thank you for your feedback!",
                 html: `<p>Dear<b> ${student.name},</b></p>
@@ -1379,7 +1379,7 @@ app.post('/changepassword',async(req,res)=>{
         });
 
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: femail,
             subject: "Password Changed Successfully",
             html: `<p>Dear  ${name},</p>
@@ -1475,7 +1475,7 @@ app.post('/changepassword1',async(req,res)=>{
         });
 
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: femail,
             subject: "Password Changed Successfully",
             html: `<p>Dear  ${name},</p>
@@ -1536,7 +1536,7 @@ app.post('/again',async(req,res)=>{
     });
     const recipients = teachers.map(teacher => teacher.email); 
     const mailOptions = {
-        from: "process.env.EMAIL_USER",
+        from: process.env.EMAIL_USER,
         to: recipients.join(','), 
         subject: "Your feedback is important to us!",
         html: `<p>Dear UCER faculty member,</p>
@@ -1579,7 +1579,7 @@ app.post('/again2',async(req,res)=>{
     });
     const recipients = teachers.map(teacher => teacher.email); 
     const mailOptions = {
-        from: "process.env.EMAIL_USER",
+        from: process.env.EMAIL_USER,
         to: recipients.join(','), 
         subject: "Important!",
         html: `<p>Dear UCER Faculty Members</b></p>
@@ -1830,12 +1830,12 @@ if (file) {
         });
         
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: student.email, 
             subject: "Your feedback is important to us!",
             html: `<p>Dear<b> ${student.name},</b></p>
             
-            <p>We have taken some action on your complain please give you feedback. You feedback will be helpful to us in knowing that how our complaint system is working in order to resolve the complains of the students.</p>
+            <p>We have taken some action on your complain please give you feedback on https://grievance-cell-2.onrender.com/complain#. You feedback will be helpful to us in knowing that how our complaint system is working in order to resolve the complains of the students.</p>
             
             <p>Action:<b>${data.actionTaken}</b></p>
             
@@ -1882,7 +1882,7 @@ app.post('/sendEmailtofaculty', async (req, res) => {
         });
 
         const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: teacher.email,
             subject: "Action not taken",
             html: `<p>Dear<b> ${teacher.name},</b></p>
@@ -2213,7 +2213,7 @@ app.post('/morethanemail',async(req,res)=>{
     });
     const recipients = teachers.map(teacher => teacher.email); 
     const mailOptions = {
-        from: "process.env.EMAIL_USER",
+        from:process.env.EMAIL_USER,
         to: recipients.join(','), 
         subject: "Important!",
         html: `<p>Dear UCER Students,</p>
@@ -2364,7 +2364,7 @@ app.get('/blocked',async(req,res)=>{
           });
       
           const mailOptions = {
-            from: "process.env.EMAIL_USER",
+            from:process.env.EMAIL_USER,
             to: faculty.email,
             subject: "IMPORTANT!",
             html: `<p>Dear <b>${faculty.name},</b></p>
