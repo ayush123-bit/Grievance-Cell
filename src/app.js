@@ -478,15 +478,19 @@ app.post('/feedback', async (req, res) => {
     console.log(complain);
     const satisfied = req.body.satisfied;
     const feedback = req.body.feedback;
-    console.log("1");
+    console.log(studentId);
     const student = await UCER.findOne({ studentId });
-  
+    //console.log(student);
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
 if(student.complains.length!=0){
       
-    const matchingComplaint = student.complains.find(existingComplaint => existingComplaint.complain === complain);
+    const matchingComplaint = student.complains.find(existingComplaint => {
+        console.log("Checking:", existingComplaint.complain, "against", complain);
+        return existingComplaint.complain === complain.trim();
+      });
+    console.log(`Matching Complaint: ${matchingComplaint}`);
 if(matchingComplaint.actionTaken.length==0){
    res.send("No action has been taken on your complain.")
 }
@@ -1835,7 +1839,7 @@ if (file) {
             subject: "Your feedback is important to us!",
             html: `<p>Dear<b> ${student.name},</b></p>
             
-            <p>We have taken some action on your complain please give you feedback on https://grievance-cell-2.onrender.com/complain#. You feedback will be helpful to us in knowing that how our complaint system is working in order to resolve the complains of the students.</p>
+            <p>We have taken some action on your complain please give you feedback on https://grievance-cell-3.onrender.com/complain#. You feedback will be helpful to us in knowing that how our complaint system is working in order to resolve the complains of the students.</p>
             
             <p>Action:<b>${data.actionTaken}</b></p>
             
