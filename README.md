@@ -66,13 +66,6 @@ npm start
 http://localhost:3000
 ```
 
-## 📸 Screenshots (Optional)
-
-You can add screenshots of:
-- Complaint submission page
-- Admin panel interface
-- Feedback/resolution confirmation
-
 ## 🔐 Security & Privacy
 
 This platform is designed to protect user data. Anonymity is supported, and no sensitive information is stored without consent. For production, add:
