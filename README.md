@@ -64,15 +64,6 @@ npm start
 ### Step 4: Access in browser
 ```
 http://localhost:3000
-```
-
-## 🔐 Security & Privacy
-
-This platform is designed to protect user data. Anonymity is supported, and no sensitive information is stored without consent. For production, add:
-- Rate limiting
-- CAPTCHA
-- User authentication
-- Database storage (MongoDB, PostgreSQL, etc.)
 
 ## 🙌 Author
 
